@@ -1,0 +1,26 @@
+{
+  "name": "xlllBot",
+  "short_name": "xlllBot",
+  "icons": [{
+    "src": "images/icon-96.png",
+    "type": "image/png",
+    "sizes": "96x96"
+  }, {
+    "src": "images/icon-192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  }, {
+    "src": "images/icon-256.png",
+    "type": "image/png",
+    "sizes": "256x256"
+  }, {
+    "src": "images/icon-512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0E0E10",
+  "theme_color": "#0E0E10"
+}

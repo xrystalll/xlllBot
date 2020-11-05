@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src/",
+    "sourceMap": false,
+    "module": "esnext",
+    "target": "esnext",
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext"
+    ],
+    "paths": {
+      "components/*": ["src/components/*"],
+      "hooks/*": ["src/hooks/*"],
+      "instance/*": ["src/instance/*"]
+    },
+    "strict": true
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,21 @@
+{
+  "dev": false,
+  "options": {
+    "debug": true
+  },
+  "connection": {
+    "secure": true,
+    "reconnect": true
+  },
+  "bot": {
+    "username": "",
+    "oauth_token": "",
+    "client_id": ""
+  },
+  "auth": {
+    "secret": "",
+    "callback_url": "/auth/twitch/callback"
+  },
+  "mongoremote": "mongodb+srv://",
+  "clientEndPoint": "http://localhost:1337"
+}

@@ -1,0 +1,73 @@
+{
+  "homepage": "./",
+  "name": "xlllbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Electron + React  Node.js Twitch chat bot app by xrystalll",
+  "author": "xrystalll",
+  "main": "app/main.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cachegoose": "^8.0.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "events": "^3.0.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "express-session": "^1.17.1",
+    "helmet": "^3.23.3",
+    "hpp": "^0.2.3",
+    "mongoose": "^5.10.11",
+    "mongoose-findorcreate": "^3.0.0",
+    "passport": "^0.4.1",
+    "passport-oauth": "^1.0.0",
+    "request": "^2.88.2",
+    "shortid": "^2.2.16",
+    "socket.io": "^2.3.0",
+    "tmi.js": "^1.5.0",
+    "updated-youtube-info": "^1.4.7",
+    "ws": "^7.0.0",
+    "x-xss-protection": "^1.3.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "electron": "^10.1.5",
+    "electron-packager": "^15.1.0",
+    "nodemon": "^2.0.6",
+    "react": "^16.14.0",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.4",
+    "react-toastify": "^5.5.0",
+    "react-youtube": "^7.13.0",
+    "socket.io-client": "^2.3.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build_app": "node app/build",
+    "react": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "bot": "node app/server",
+    "bot_dev": "nodemon app/server"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

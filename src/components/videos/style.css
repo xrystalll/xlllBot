@@ -1,0 +1,103 @@
+/* VideoItem */
+ol#vid-list li {
+  list-style: none;
+}
+
+.choose_vid {
+  position: relative;
+  min-height: 64px;
+  display: flex;
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+.choose_vid:hover, li.selected .choose_vid {
+  background-color: var(--secondary-tint);
+  transition: .3s;
+}
+.choose_vid:hover {
+  background-color: var(--secondary-bg);
+}
+
+.vid_thumb {
+  width: 100px;
+  max-width: 100px;
+  min-width: 100px;
+  height: 56px;
+  margin-right: 8px;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-color: var(--secondary-bg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vid_thumb img {
+  height: 64px;
+}
+
+.vid_duration {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 10px;
+  background: var(--default-transparent-06);
+  color: var(--default-white);
+  padding: 1px 7px;
+  border-radius: 8px;
+}
+
+#vid-list .desc {
+  color: var(--main-text-color);
+  font-size: 13px;
+  margin-top: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.remove_vid {
+  display: none;
+  position: absolute;
+  bottom: 2px;
+  right: 8px;
+  line-height: 0;
+  padding: 4px;
+  border-radius: 4px;
+}
+.choose_vid:hover .remove_vid {
+  display: block;
+}
+.remove_vid:hover {
+  background: var(--default-transparent-02);
+}
+.remove_vid i {
+  font-size: 18px;
+  color: var(--main-danger-color);
+}
+
+.vid_info {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+.vid_info .views {
+  color: var(--secondary-color);
+  margin-top: 2px;
+  font-size: 11px;
+}
+.vid_info .owner {
+  color: var(--main-info-color);
+  margin-top: 4px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 800px) {
+  .vid_info {
+    max-width: 70% !important;
+  }
+}

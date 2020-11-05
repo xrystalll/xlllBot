@@ -1,0 +1,14 @@
+/* EventItem */
+.event_item {
+  display: flex;
+  align-items: baseline;
+  margin: 16px 0;
+  user-select: none;
+}
+
+.event_time {
+  margin-right: 12px;
+  color: var(--secondary-color);
+  font-size: 13px;
+  white-space: nowrap;
+}

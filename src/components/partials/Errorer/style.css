@@ -1,0 +1,23 @@
+/* Errorer */
+.empty-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 40px;
+  max-width: 210px;
+  min-height: 110px;
+  user-select: none;
+}
+.empty_words {
+  max-width: 210px;
+  text-align: center;
+  position: relative;
+  font-size: 15px;
+  color: var(--secondary-color);
+}
+.empty_top {
+  margin-top: 8px;
+  word-break: break-all;
+}

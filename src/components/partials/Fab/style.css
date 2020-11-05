@@ -1,0 +1,39 @@
+/* Fab */
+.fab {
+  width: 56px;
+  height: 56px;
+  background: var(--accent-color);
+  box-shadow: 0 3px 5px -1px var(--default-transparent-02);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: -28px;
+  right: 26px;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.fab.small {
+  width: 48px;
+  height: 48px;
+  top: -24px;
+  right: 30px;
+}
+
+.fab.inheader {
+  top: 0;
+  right: 94px;
+}
+
+.fab.inheader.small {
+  top: 4px;
+  right: 34px;
+}
+
+.fab:hover {
+  background: var(--selection-bg);
+  box-shadow: 0 4px 6px 0 var(--default-transparent-04);
+}
+

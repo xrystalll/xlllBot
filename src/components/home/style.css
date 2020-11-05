@@ -1,0 +1,98 @@
+.bg {
+  display: flex;
+  width: 100%;
+  background-image: url(./twitch-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-attachment: fixed;
+  filter: blur(5px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.bg::before {
+  content: '';
+  background: var(--default-transparent-08);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.landing {
+  min-height: 100%;
+  display: flex;
+}
+
+.landing_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.main_head {
+  font-size: 42px;
+  padding: 0 16px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 340px;
+  color: var(--main-text-color);
+  user-select: none;
+}
+
+.main_sub {
+  font-size: 36px;
+  font-weight: 500;
+  padding: 0 16px;
+  width: 100%;
+  max-width: 340px;
+  user-select: none;
+}
+
+.main_description {
+  max-width: 450px;
+  font-size: 22px;
+  text-align: center;
+  margin: 32px auto;
+  padding: 0 16px;
+  user-select: none;
+}
+
+.twitch_btn_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px !important;
+  color: var(--main-text-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  max-width: 215px;
+  height: 44px;
+  transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in;
+  cursor: pointer;
+  user-select: none;
+}
+
+.twitch_btn_main:hover {
+  background: var(--default-transparent-04);
+}
+
+.main_copy {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 12px 16px;
+  user-select: none;
+}
+
+.main_copy a {
+  color: var(--accent-color);
+  padding: 4px 8px;
+}
