@@ -228,19 +228,9 @@ pubsub.on('channel-points', (data) => {
   if (data.redemption.user_input.toLowerCase().indexOf('!sr') === -1) return
   if (!checkYTUrl(data.redemption.user_input)) return
 
-  request({
-    method: 'GET',
-    url: 'https://api.twitch.tv/kraken/channels/' + data.redemption.channel_id,
-    headers: {
-      'Client-ID': config.bot.client_id,
-      Accept: 'application/vnd.twitchtv.v5+json'
-    }
-  }, (err, res, body) => {
-    if (err) return
-
-    if (res && res.statusCode === 200) {
-      const channelData = JSON.parse(body)
-      const channel = channelData.name
+  UserDB.findOne({ twitchId: data.redemption.channel_id })
+    .then(user => {
+      const channel = user.login
 
       checkSettings(channel, 'songrequest').then(bool => {
         if (bool) {
@@ -266,10 +256,7 @@ pubsub.on('channel-points', (data) => {
           })
         } else client.say(channel, 'Возможность заказывать видео выключена!')
       })
-    } else {
-      console.error('Channel does not exist')
-    }
-  })
+    })
 })
 
 pubsub.on('error', (data) => {
@@ -337,7 +324,7 @@ passport.use('twitch', new OAuth2Strategy({
   clientID: config.bot.client_id,
   clientSecret: config.auth.secret,
   callbackURL: config.auth.callback_url,
-  scope: ['user:read:email', 'channel:read:redemptions'],
+  scope: ['user:read:email', 'channel:read:redemptions', 'user:edit:broadcast'],
   state: true
 }, (accessToken, refreshToken, profile, next) => {
   profile.accessToken = accessToken

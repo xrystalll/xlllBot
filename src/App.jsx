@@ -14,7 +14,7 @@ import Events from 'components/events';
 import Settings from 'components/settings';
 import AllCommands from 'components/allcommands';
 import { Auth } from 'components/auth';
-import { AuthError } from 'components/auth/error'
+import { AuthError } from 'components/auth/error';
 import { NotFound } from 'components/error';
 import { ToastContainer, toast } from 'react-toastify';
 

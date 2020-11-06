@@ -2,6 +2,7 @@ const path = require('path')
 const config = require(path.join(__dirname, '..', '..', 'config', 'default.json'))
 const { checkSettings } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
+const UserDB = require(path.join(__dirname, '..', 'models', 'UserDB'))
 const GamesDB = require(path.join(__dirname, '..', 'models', 'GamesDB'))
 const request = require('request')
 
@@ -26,23 +27,40 @@ const game = (channel, roomId, args) => {
 }
 
 const setGame = (channel, roomId, game) => {
-  const streamObject = {"channel": { game, "channel_feed_enabled": true }}
+  UserDB.findOne({ login: channel })
+    .then(data => {
+      request({
+        method: 'GET',
+        url: 'https://api.twitch.tv/helix/games?name=' + encodeURIComponent(game.toLowerCase()),
+        headers: {
+          Authorization: 'Bearer ' + data.token,
+          'Client-ID': config.bot.client_id
+        }
+      }, (err, res, body) => {
+        const gameObj = JSON.parse(body)
 
-  request({
-    method: 'PUT',
-    url: 'https://api.twitch.tv/kraken/channels/' + roomId,
-    headers: {
-      Authorization: 'OAuth ' + config.bot.oauth_token,
-      'Client-ID': config.bot.client_id,
-      Accept: 'application/vnd.twitchtv.v5+json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(streamObject)
-  }, (err, res, body) => {
-    if (err) return
+        if (err || !gameObj.data.length) {
+          client.say(channel, 'Не удалось установить категорию')
+          return
+        }
 
-    client.say(channel, `Установлена категория - ${game}`)
-  })
+        request({
+          method: 'PATCH',
+          url: 'https://api.twitch.tv/helix/channels?broadcaster_id=' + roomId,
+          headers: {
+            Authorization: 'Bearer ' + data.token,
+            'Client-ID': config.bot.client_id,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ game_id: gameObj.data[0].id })
+        }, (err) => {
+          if (err) return
+
+          client.say(channel, `Установлена категория - ${gameObj.data[0].name}`)
+        })
+      })
+    })
+    .catch(error => client.say(channel, 'Не удалось установить категорию'))
 }
 
 module.exports = { game }
