@@ -1,5 +1,55 @@
 const path = require('path')
+const config = require(path.join(__dirname, '..', 'config', 'default.json'))
 const SettingsDB = require(path.join(__dirname, 'models', 'SettingsDB'))
+const UserDB = require(path.join(__dirname, 'models', 'UserDB'))
+const request = require('request')
+
+const twitchApi = (channel, method, api, params = null) => new Promise((resolve, reject) => {
+  if (!channel && !method && !api) return reject()
+
+  const baseApiUrl = 'https://api.twitch.tv/helix'
+  const query = !!params.urlParams
+    ? Object.keys(params.urlParams).map(key => key + '=' + encodeURIComponent(params.urlParams[key].toLowerCase())).join('&')
+    : ''
+  const url = !!query ? baseApiUrl + api + '?' + query : baseApiUrl + api
+
+  const options = (method, url, token, body = null) => {
+    const optionsObj = {
+      method,
+      url,
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Client-ID': config.bot.client_id
+      }
+    }
+
+    if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+      optionsObj.headers['Content-Type'] = 'application/json'
+      if (!!body) {
+        optionsObj.body = JSON.stringify(body)
+      }
+    }
+
+    return optionsObj
+  }
+
+  UserDB.findOne({ login: channel })
+    .cache(30, 'cache-userdata-for-' + channel)
+    .then(user => {
+      request(options(method, url, user.token, params.bodyParams), (err, res, body) => {
+        if (err) return reject(err)
+
+        const data = JSON.parse(body + '' || '{}')
+
+        if (!body.error) {
+          resolve(data)
+        } else {
+          reject(res.statusMessage)
+        }
+      })
+    })
+    .catch(err => reject(err))
+})
 
 const parseCommand = (message = '') => {
   const regex = /!(.*?)$/gm
@@ -56,4 +106,4 @@ const youtubeId = (url) => {
   return (match && match[7].length === 11) ? match[7] : false
 }
 
-module.exports = { parseCommand, checkSettings, declOfNum, timeFormat, checkUrl, checkYTUrl, youtubeId }
+module.exports = { twitchApi, parseCommand, checkSettings, declOfNum, timeFormat, checkUrl, checkYTUrl, youtubeId }
