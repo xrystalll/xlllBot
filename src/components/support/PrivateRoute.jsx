@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { getCookie } from 'components/support/Utils';
+import Header from 'components/partials/Header';
+import Footer from 'components/partials/Footer';
 import { toast } from 'react-toastify';
 
 class PrivateRoute extends Component {
@@ -21,7 +23,11 @@ class PrivateRoute extends Component {
         {...rest}
         render = {props =>
           this.isAuth ? (
-            <Component {...props} />
+            <React.Fragment>
+              <Header />
+              <Component {...props} />
+              <Footer />
+            </React.Fragment>
           ) : (
             <Redirect to={{ pathname: '/', state: { from: props.location } }} />
           )

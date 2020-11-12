@@ -12,7 +12,8 @@
     "paths": {
       "components/*": ["src/components/*"],
       "hooks/*": ["src/hooks/*"],
-      "instance/*": ["src/instance/*"]
+      "instance/*": ["src/instance/*"],
+      "store/*": ["src/store/*"]
     },
     "strict": true
   },

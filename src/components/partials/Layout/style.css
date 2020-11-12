@@ -32,24 +32,24 @@
   }
 }
 
-#main {
+#main, #footer {
   position: relative;
   margin-top: 150px;
 }
 
 @media (min-width: 1000px) {
-  #main {
+  #main, #footer {
     padding: 0 40px 30px 310px;
   }
 }
 @media (max-width: 999px) and (min-width: 768px) {
-  #main {
+  #main, #footer {
     padding: 0 40px 30px;
     margin-top: 140px;
   }
 }
 @media (max-width: 767px) {
-  #main {
+  #main, #footer {
     padding: 0 12px 32px;
     margin-top: 90px;
   }

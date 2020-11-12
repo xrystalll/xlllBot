@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from 'components/partials/Header';
-import Footer from 'components/partials/Footer';
 import '././style.css';
 
 const Layout = ({ title, subTitle, videoLayout, action, children }) => {
@@ -8,8 +6,6 @@ const Layout = ({ title, subTitle, videoLayout, action, children }) => {
 
   return (
     <div className="layout">
-      <Header />
-
       <section id="main">
         <div className={'content--boxed-sm' + videoblock}>
           <header className="content__header">
@@ -18,9 +14,6 @@ const Layout = ({ title, subTitle, videoLayout, action, children }) => {
           </header>
           {children}
         </div>
-
-        <Footer />
-
       </section>
     </div>
   )

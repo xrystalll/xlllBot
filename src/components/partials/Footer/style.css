@@ -1,13 +1,14 @@
 /* Footer */
 #footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-top: 30px;
+  margin-top: 0 !important;
   padding: 20px 0;
   color: var(--main-control-color);
   user-select: none;
+}
+#footer .content--boxed-sm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 #footer .footer__menu {
   margin: 0;
@@ -28,7 +29,7 @@
 }
 
 @media (max-width: 600px) {
-  #footer {
+  #footer .content--boxed-sm {
     display: block;
     text-align: center;
   }

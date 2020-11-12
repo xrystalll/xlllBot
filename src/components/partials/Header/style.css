@@ -8,7 +8,6 @@
   align-items: center;
   padding: 14px 28px 14px 0;
   user-select: none;
-  z-index: 10;
 }
 #header::before, #header::after {
   content: '';
@@ -31,6 +30,7 @@
   width: 240px;
   position: absolute;
   padding: 6px 14px;
+  z-index: 10;
 }
 #header .logo {
   transition: background .2s;
@@ -52,6 +52,7 @@
   float: right;
   margin-bottom: 0;
   margin-left: auto;
+  z-index: 8;
 }
 .top-menu > li {
   vertical-align: top;

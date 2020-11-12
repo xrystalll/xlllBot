@@ -6,7 +6,7 @@ const options = {
   "dir": "./",
   "icon": path.join(__dirname, '..', 'build', 'images', 'icon.ico'),
   "name": "xlllBot",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "app-copyright": "xrystalll",
   "out": "./releases",
   "asar": true,

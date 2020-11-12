@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getCookie } from 'components/support/Utils';
 import { socket } from 'instance/Socket';
+import { StoreContext } from 'store/Store';
 import YouTube from 'react-youtube';
 import CustomScrollbar from '../support/CustomScrollbar';
 import { VideoItem } from './VideoItem';
@@ -12,15 +13,12 @@ import Errorer from 'components/partials/Errorer';
 
 let player
 class Videos extends Component {
+  static contextType = StoreContext;
   _isMounted = false;
   constructor() {
     super();
-    this.state = {
-      response: [],
-      playIndex: 0,
-      playing: false,
-      noData: false
-    }
+
+    this.onPlayerReady = this.onPlayerReady.bind(this)
     this.onPlay = this.onPlay.bind(this)
     this.onPause = this.onPause.bind(this)
     this.chooseVideo = this.chooseVideo.bind(this)
@@ -31,11 +29,18 @@ class Videos extends Component {
   componentDidMount() {
     document.title = 'xlllBot - Stream Dj'
     this._isMounted = true
-    socket.emit('video_items', { channel: getCookie('login') })
+    this.context.dispatch({ type: 'SET_MINI', payload: false })
     this.subscribeToEvents()
+    socket.emit('video_items', { channel: getCookie('login') })
   }
 
   componentWillUnmount() {
+    if (this.context.state.playing) {
+      this.context.dispatch({ type: 'SET_MINI', payload: true })
+    }
+    if (player !== undefined) {
+      this.context.dispatch({ type: 'SET_TIME', payload: player.getCurrentTime() })
+    }
     this._isMounted = false
   }
 
@@ -44,20 +49,9 @@ class Videos extends Component {
 
     socket.on('output_videos', (data) => {
       if (data.length > 0) {
-        this.setState({ response: data })
+        this.context.dispatch({ type: 'SET_VIDEOS', payload: data })
       } else {
-        this.setState({ noData: true })
-      }
-    })
-    socket.on('new_video', (data) => {
-      if (data.channel !== getCookie('login')) return
-
-      this.setState({ response: [...this.state.response, data], noData: false })
-    })
-    socket.on('deteted', (data) => {
-      this.setState({ response: this.state.response.filter(item => item._id !== data.id) })
-      if (this.state.response.filter(item => item._id !== data.id).length === 0) {
-        this.setState({ noData: true })
+        this.context.dispatch({ type: 'SET_ERROR', payload: true })
       }
     })
     socket.on('skip', (data) => {
@@ -71,14 +65,22 @@ class Videos extends Component {
 
   onPlayerReady(e) {
     player = e.target
+    if (this.context.state.time > 0) {
+      player.seekTo(this.context.state.time)
+      if (this.context.state.playing) {
+        player.playVideo()
+      } else {
+        player.pauseVideo()
+      }
+    }
   }
 
   onPlay() {
-    this.setState({ playing: true })
+    this.context.dispatch({ type: 'SET_PLAYING', payload: true })
   }
 
   onPause() {
-    this.setState({ playing: false })
+    this.context.dispatch({ type: 'SET_PLAYING', payload: false })
   }
 
   onPlayPause() {
@@ -91,28 +93,36 @@ class Videos extends Component {
   chooseVideo(data) {
     if (!this._isMounted) return
 
-    this.setState({ playIndex: Number(data.index) })
+    this.context.dispatch({ type: 'SET_INDEX', payload: Number(data.index) })
 
     if (player === undefined) return
 
     player.loadVideoById(data.id)
+    setTimeout(() => {
+      player.playVideo()
+    }, 500)
   }
 
   skip() {
     if (!this._isMounted) return
 
-    const { response, playIndex } = this.state
+    const { response, playIndex } = this.context.state
 
     if (response.length === 0) return
 
     let thisIndex = playIndex + 1
     if (thisIndex >= response.length) thisIndex = 0
-    this.setState({ playIndex: thisIndex })
+
+    this.context.dispatch({ type: 'SET_INDEX', payload: thisIndex })
+
     const id = response[thisIndex].yid
 
     if (player === undefined) return
 
     player.loadVideoById(id)
+    setTimeout(() => {
+      player.playVideo()
+    }, 500)
   }
 
   deleteVideo(id, e) {
@@ -121,7 +131,7 @@ class Videos extends Component {
   }
 
   render() {
-    const { response, playIndex, playing, noData } = this.state
+    const { response, playIndex, playing, noData } = this.context.state
     const ytOptions = {
       height: '384',
       width: '560',
@@ -129,6 +139,7 @@ class Videos extends Component {
         autoplay: 0
       }
     }
+    const initId = response.length > 0 ? response[playIndex].yid : 0
 
     return (
       <Layout
@@ -148,7 +159,7 @@ class Videos extends Component {
               {response.length > 0 ? (
                 <YouTube
                   opts={ytOptions}
-                  videoId={response[0].yid}
+                  videoId={initId}
                   containerClassName="iframe"
                   onPlay={this.onPlay}
                   onPause={this.onPause}
