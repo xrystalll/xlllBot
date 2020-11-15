@@ -11,6 +11,7 @@ const initialState = {
 }
 
 const StoreContext = createContext(initialState)
+StoreContext.displayName = 'StoreContext'
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState)
@@ -19,7 +20,7 @@ const Store = ({ children }) => {
     <StoreContext.Provider value={{ state, dispatch }}>
       {children}
     </StoreContext.Provider>
-    )
+  )
 };
 
 export { Store, StoreContext };

@@ -98,10 +98,6 @@ class YouTubePlayer extends Component {
     this.ownClose = true
     this.context.dispatch({ type: 'SET_PLAYING', payload: false })
     this.context.dispatch({ type: 'SET_MINI', payload: false })
-
-    if (player === undefined) return
-
-    player.pauseVideo()
   }
 
   render() {

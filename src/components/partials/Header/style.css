@@ -179,7 +179,7 @@
     color: var(--main-text-color);
   }
   #navigation {
-    padding-top: 64px;
+    padding-top: 88px;
     position: fixed;
     top: 0;
     height: 100%;
@@ -190,7 +190,7 @@
   }
   #navigation.open {
     display: block;
-    padding-top: 64px;
+    padding-top: 88px;
     transform: translate(0px, 0);
   }
 }

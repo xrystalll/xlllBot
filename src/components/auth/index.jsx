@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 export const Auth = () => {
-
   useEffect(() => {
     document.title = 'xlllBot - Log in'
     setTimeout(() => window.close(), 1500)

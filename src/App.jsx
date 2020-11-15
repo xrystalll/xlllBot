@@ -80,22 +80,20 @@ class App extends Component {
           </Router>
 
           <ToastContainer position="bottom-right" autoClose={2000} pauseOnFocusLoss={false} />
-
-          {this.context.state.mini && <YouTubePlayer />}
         </CustomScrollbar>
+
+        {this.context.state.mini && <YouTubePlayer />}
       </React.Fragment>
     )
   }
 }
 
-class Root extends Component {
-  render() {
-    return (
-      <Store>
-        <App />
-      </Store>
-    )
-  }
+const Root = () => {
+  return (
+    <Store>
+      <App />
+    </Store>
+  )
 }
 
 export default Root;

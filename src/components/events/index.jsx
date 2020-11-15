@@ -22,8 +22,8 @@ class Events extends Component {
   componentDidMount() {
     document.title = 'xlllBot - Events'
     this._isMounted = true
-    socket.emit('event_items', { channel: getCookie('login') })
     this.subscribeToEvents()
+    socket.emit('event_items', { channel: getCookie('login') })
   }
 
   componentWillUnmount() {
