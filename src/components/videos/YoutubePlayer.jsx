@@ -5,6 +5,7 @@ import { StoreContext } from 'store/Store';
 import YouTube from 'react-youtube';
 import { Loader } from 'components/partials/Loader';
 import Errorer from 'components/partials/Errorer';
+import Draggable from 'react-draggable';
 
 let player
 class YouTubePlayer extends Component {
@@ -103,8 +104,8 @@ class YouTubePlayer extends Component {
   render() {
     const { response, playIndex, noData } = this.context.state
     const ytOptions = {
-      height: '384',
       width: '560',
+      height: '384',
       playerVars: {
         autoplay: true
       }
@@ -112,22 +113,26 @@ class YouTubePlayer extends Component {
     const initId = response.length > 0 ? response[playIndex].yid : 0
 
     return (
-      <div className="vid-container sticky">
-        <i className="material-icons close_mini" onClick={this.hideMiniPlayer}>close</i>
-        {response.length > 0 ? (
-          <YouTube
-            opts={ytOptions}
-            videoId={initId}
-            containerClassName="iframe"
-            onPlay={this.onPlay}
-            onPause={this.onPause}
-            onReady={this.onPlayerReady}
-            onEnd={this.skip}
-          />
-        ) : (
-          !noData ? <Loader /> : <Errorer message="No videos yet" />
-        )}
-      </div>
+      <Draggable>
+        <div className="vid-container sticky">
+          <div className="mini_overlay">
+            <i className="material-icons close_mini" onClick={this.hideMiniPlayer} title="Close miniplayer">close</i>
+          </div>
+          {response.length > 0 ? (
+            <YouTube
+              opts={ytOptions}
+              videoId={initId}
+              containerClassName="iframe"
+              onPlay={this.onPlay}
+              onPause={this.onPause}
+              onReady={this.onPlayerReady}
+              onEnd={this.skip}
+            />
+          ) : (
+            !noData ? <Loader /> : <Errorer message="No videos yet" />
+          )}
+        </div>
+      </Draggable>
     )
   }
 }

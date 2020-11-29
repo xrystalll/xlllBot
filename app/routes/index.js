@@ -643,7 +643,11 @@ router.get('/api/invite/add', (req, res) => {
 
 // error 404
 router.get('*', (req, res) => {
-  res.status(404).json({ error: '404 Not found' })
+  if (req.xhr) {
+    res.status(404).json({ error: '404 Not found' })
+  } else {
+    res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'))
+  }
 })
 
 module.exports = router

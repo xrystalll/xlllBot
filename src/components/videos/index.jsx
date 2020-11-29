@@ -133,8 +133,8 @@ class Videos extends Component {
   render() {
     const { response, playIndex, playing, noData } = this.context.state
     const ytOptions = {
-      height: '384',
       width: '560',
+      height: '384',
       playerVars: {
         autoplay: 0
       }

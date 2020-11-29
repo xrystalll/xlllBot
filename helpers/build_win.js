@@ -6,18 +6,18 @@ const options = {
   "dir": "./",
   "icon": path.join(__dirname, '..', 'build', 'images', 'icon.ico'),
   "name": "xlllBot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "app-copyright": "xrystalll",
   "out": "./releases",
   "asar": true,
   "overwrite": true,
   "prune": true,
-  "ignore": /(^\/(src|test|public|releases|\.[a-z]+|README|LICENSE|yarn|static|cache|preview|dist\/web))|\.gitkeep/,
+  "ignore": /(^\/(src|test|public|releases|helpers|\.[a-z]+|README|LICENSE|yarn|static|cache|preview|dist\/web))|\.gitkeep/,
 }
 
-async function bundleElectronApp(options) {
+const bundleElectronWindowsApp = async (options) => {
   const appPaths = await packager(options)
   console.log(`Electron app bundles created:\n${appPaths.join("\n")}`)
 }
 
-bundleElectronApp(options)
+bundleElectronWindowsApp(options)

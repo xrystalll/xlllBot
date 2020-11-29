@@ -272,16 +272,6 @@ const limiter = new RateLimit({
 app.use('/api/', limiter),
 
 app.use(express.static(path.join(__dirname, '..', 'build')))
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'))
-})
-app.get('/auth', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'))
-})
-app.get('/auth/error', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'))
-})
-
 app.use(session({
   secret: crypto.createHash('md5').update(Math.random().toString(36).substring(3)).digest('hex'),
   cookie: { httpOnly: true, sameSite: true },
@@ -359,7 +349,7 @@ passport.deserializeUser((user, next) => {
 
 app.get('/auth/twitch', passport.authenticate('twitch')),
 
-app.get('/auth/twitch/callback', passport.authenticate('twitch', { failureRedirect: config.clientEndPoint + '/auth/error' }), (req, res) => {
+app.get(config.auth.callback_url, passport.authenticate('twitch', { failureRedirect: config.clientEndPoint + '/auth/error' }), (req, res) => {
   if (!req.session.passport) return res.status(401).redirect(config.clientEndPoint + '/auth/error')
 
   const { id } = req.session.passport.user.data[0]
