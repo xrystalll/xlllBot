@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { twitchApi, checkSettings } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 
@@ -15,10 +16,10 @@ const title = (channel, roomId, args) => {
       }).then(data => {
         if (!data) throw Error
 
-        client.say(channel, `Установлено название стрима: ${status}`)
+        client.say(channel, `${Strings.streamTitleHasBeenSet}: ${status}`)
       })
-      .catch(err => client.say(channel, 'Не удалось установить название стрима'))
-    } else client.say(channel, 'Возможность менять название стрима командой выключена!')
+      .catch(err => client.say(channel, Strings.unableSetStreamTitle))
+    } else client.say(channel, Strings.abilityChangeStreamTitleWithCommandDisabled)
   })
 }
 

@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { checkSettings } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 const request = require('request')
@@ -14,7 +15,7 @@ const poll = (channel, args) => {
       const options = str.split(' | ')
       const pollObject = { title, options }
 
-      if (options.length < 2) return client.say(channel, 'Команда введена неверно!')
+      if (options.length < 2) return client.say(channel, Strings.commandEnteredIncorrectly)
 
       request({
         method: 'POST',
@@ -29,10 +30,10 @@ const poll = (channel, args) => {
         if (res && res.statusCode === 200) {
           const data = JSON.parse(body)
 
-          client.action(channel, `${title} - Голосовать тут https://www.strawpoll.me/${data.id}`)
+          client.action(channel, `${title} - ${Strings.voteHere} https://www.strawpoll.me/${data.id}`)
         }
       })
-    } else client.say(channel, 'Возможность создавать голосования выключена!')
+    } else client.say(channel, Strings.abilityCreatePollsDisabled)
   })
 }
 

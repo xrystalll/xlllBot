@@ -1,5 +1,6 @@
 const path = require('path')
 const config = require(path.join(__dirname, '..', 'config', 'default.json'))
+const Strings = require(path.join(__dirname, '..', 'config', 'strings.json'))
 const SettingsDB = require(path.join(__dirname, 'models', 'SettingsDB'))
 const UserDB = require(path.join(__dirname, 'models', 'UserDB'))
 const request = require('request')
@@ -90,10 +91,10 @@ const timeFormat = (date) => {
   const minutes = Math.floor(totalSeconds / 60)
 
   return `${
-    year > 0 ? year + declOfNum(year, [' год ', ' года ', ' лет ']) : ''}${
-    days > 0 ? days + declOfNum(days, [' день ', ' дня ', ' дней ']) : ''}${
-    hours > 0 ? hours + declOfNum(hours, [' час ', ' часа ', ' часов ']) : ''}${
-    minutes > 0 ? minutes + declOfNum(minutes, [' минуту', ' минуты', ' минут']) : ''
+    year > 0 ? year + declOfNum(year, [` ${Strings.year} `, ` ${Strings.years} `, ` ${Strings.manyYears} `]) : ''}${
+    days > 0 ? days + declOfNum(days, [` ${Strings.day} `, ` ${Strings.days} `, ` ${Strings.manyDays} `]) : ''}${
+    hours > 0 ? hours + declOfNum(hours, [` ${Strings.hour} `, ` ${Strings.hours} `, ` ${Strings.manyHours} `]) : ''}${
+    minutes > 0 ? minutes + declOfNum(minutes, [` ${Strings.minute}`, ` ${Strings.minutes}`, ` ${Strings.manyMinutes}`]) : ''
   }`
 }
 

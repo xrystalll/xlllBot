@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', 'config', 'strings.json'))
 
 const Mongoose = require('mongoose')
 const cachegoose = require('cachegoose')
@@ -50,7 +51,7 @@ router.get('/api/user', (req, res) => {
         logo: data.logo
       })
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -63,7 +64,7 @@ router.get('/api/channel', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       ChannelsDB.find({ name: channel })
         .then(data => {
@@ -75,9 +76,9 @@ router.get('/api/channel', (req, res) => {
               .catch(error => res.status(500).json({ error }))
           }
         })
-        .catch(error => res.status(500).json({ error: 'Unable to get channel' }))
+        .catch(error => res.status(500).json({ error: Strings.unableGetChannel }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // get moderators list
@@ -88,13 +89,13 @@ router.get('/api/channel/mods', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       client.mods(channel)
         .then(data => res.json(data))
-        .catch(error => res.status(500).json({ error: 'Unable to get list of moderators' }))
+        .catch(error => res.status(500).json({ error: Strings.unableGetModerators }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -107,7 +108,7 @@ router.get('/api/bot/join', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       client.join(channel)
         .then(joined => {
@@ -115,13 +116,13 @@ router.get('/api/bot/join', (req, res) => {
             .then(() => {
               pubsub.addTopic([{ topic: 'channel-points-channel-v1.' + data.twitchId, token: data.token }])
                 .catch(error => console.error(error))
-              res.json({ message: 'Bot joined to chat: ' + joined.join() })
+              res.json({ message: Strings.botJoined + ' ' + joined.join() })
             })
             .catch(error => res.status(500).json({ error }))
         })
-        .catch(error => res.status(500).json({ error: 'Unable join to chat' }))
+        .catch(error => res.status(500).json({ error: Strings.unableJoinToChat }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // leave bot from chat
@@ -132,7 +133,7 @@ router.get('/api/bot/leave', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       client.part(channel)
         .then(leaved => {
@@ -140,13 +141,13 @@ router.get('/api/bot/leave', (req, res) => {
             .then(() => {
               pubsub.removeTopic([{ topic: 'channel-points-channel-v1.' + data.twitchId }])
                 .catch(error => console.error(error))
-              res.json({ message: 'Bot left chat: ' + leaved.join() })
+              res.json({ message: Strings.botLeft + ' ' + leaved.join() })
             })
             .catch(error => res.status(500).json({ error }))
         })
-        .catch(error => res.status(500).json({ error: 'Unable to leave from chat' }))
+        .catch(error => res.status(500).json({ error: Strings.unableLeaveFromChat }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -159,14 +160,14 @@ router.get('/api/commands/all', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       CommandDB.find({ channel })
         .cache(0, 'cache-all-commands-for-' + channel)
         .then(data => res.json(data))
-        .catch(error => res.status(500).json({ error: 'Unable to get list of commands' }))
+        .catch(error => res.status(500).json({ error: Strings.unableGetCommands }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // create new command
@@ -178,18 +179,18 @@ router.put('/api/commands/add', (req, res) => {
       const channel = data.login
       const { tag, text, countdown } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!tag || !text || countdown === undefined || !channel) return res.status(400).json({ error: 'Empty request' })
-      if (!Number.isInteger(countdown)) return res.status(400).json({ error: 'Countdown must be a number' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!tag || !text || countdown === undefined || !channel) return res.status(400).json({ error: Strings.emptyRequest })
+      if (!Number.isInteger(countdown)) return res.status(400).json({ error: Strings.countdownMustBeNumber })
 
       CommandDB.create({ tag, text, countdown, last_auto_send: Date.now(), channel })
         .then(data => {
           cachegoose.clearCache('cache-all-commands-for-' + channel)
           res.json(data)
         })
-        .catch(error => res.status(500).json({ error: 'Unable to add command' }))
+        .catch(error => res.status(500).json({ error: Strings.unableAddCommand }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // edit command
@@ -201,18 +202,18 @@ router.put('/api/commands/edit', (req, res) => {
       const channel = data.login
       const { id, tag, text, countdown } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!id || !tag || !text || countdown === undefined || !channel) return res.status(400).json({ error: 'Empty request' })
-      if (!Number.isInteger(countdown)) return res.status(400).json({ error: 'Countdown must be a number' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!id || !tag || !text || countdown === undefined || !channel) return res.status(400).json({ error: Strings.emptyRequest })
+      if (!Number.isInteger(countdown)) return res.status(400).json({ error: Strings.countdownMustBeNumber })
 
       CommandDB.updateOne({ _id: Mongoose.Types.ObjectId(id) }, { tag, text, countdown })
         .then(() => {
           cachegoose.clearCache('cache-all-commands-for-' + channel)
           res.json({ success: true })
         })
-        .catch(error => res.status(500).json({ error: 'Unable to edit command' }))
+        .catch(error => res.status(500).json({ error: Strings.unableEditCommand }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // delete command
@@ -224,17 +225,17 @@ router.put('/api/commands/delete', (req, res) => {
       const channel = data.login
       const { id } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!id) return res.status(400).json({ error: 'Empty request' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!id) return res.status(400).json({ error: Strings.emptyRequest })
 
       CommandDB.deleteOne({ _id: Mongoose.Types.ObjectId(id), channel })
         .then(data => {
           cachegoose.clearCache('cache-all-commands-for-' + channel)
           res.json({ success: true, deletedCount: data.deletedCount })
         })
-        .catch(error => res.status(500).json({ error: 'Unable to delete command' }))
+        .catch(error => res.status(500).json({ error: Strings.unableDeleteCommand }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -246,14 +247,14 @@ router.get('/api/words/all', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       BadWordsDB.find({ channel })
         .cache(0, 'cache-all-badwords-for-' + channel)
         .then(data => res.json(data))
-        .catch(error => res.status(500).json({ error: 'Unable to get list of badwords' }))
+        .catch(error => res.status(500).json({ error: Strings.unableGetBadwords }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // add new word
@@ -265,19 +266,19 @@ router.put('/api/words/add', (req, res) => {
       const channel = data.login
       const { word, duration } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!word || !duration || !channel) return res.status(400).json({ error: 'Empty request' })
-      if (!Number.isInteger(duration)) return res.status(400).json({ error: 'Duration must be a number' })
-      if (duration === 0) return res.status(400).json({ error: 'Duration must be greater then zero' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!word || !duration || !channel) return res.status(400).json({ error: Strings.emptyRequest })
+      if (!Number.isInteger(duration)) return res.status(400).json({ error: Strings.durationMustBeNumber })
+      if (duration === 0) return res.status(400).json({ error: Strings.durationMustBeGreaterZero })
 
       BadWordsDB.create({ word, duration, channel })
         .then(data => {
           cachegoose.clearCache('cache-all-badwords-for-' + channel)
           res.json(data)
         })
-        .catch(error => res.status(500).json({ error: 'Unable to add badword' }))
+        .catch(error => res.status(500).json({ error: Strings.unableAddBadword }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // delete word
@@ -289,17 +290,17 @@ router.put('/api/words/delete', (req, res) => {
       const channel = data.login
       const { id } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!id) return res.status(400).json({ error: 'Empty request' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!id) return res.status(400).json({ error: Strings.emptyRequest })
 
       BadWordsDB.deleteOne({ _id: Mongoose.Types.ObjectId(id), channel })
         .then(data => {
           cachegoose.clearCache('cache-all-badwords-for-' + channel)
           res.json({ success: true, deletedCount: data.deletedCount })
         })
-        .catch(error => res.status(500).json({ error: 'Unable to delete badword' }))
+        .catch(error => res.status(500).json({ error: Strings.unableDeleteBadword }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -312,7 +313,7 @@ router.get('/api/settings/all', (req, res) => {
 
       const channel = data.login
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
 
       SettingsDB.find({ channel })
         .then(data => {
@@ -324,104 +325,104 @@ router.get('/api/settings/all', (req, res) => {
                 sort: 1,
                 name: 'pingpong',
                 state: true,
-                description: 'Мини-игра пинг понг',
+                description: Strings.miniGamePingPong,
                 channel
               }, {
                 sort: 2,
                 name: 'cocksize',
                 state: true,
-                description: 'Мини-игра "Размер..."',
+                description: Strings.miniGameSize,
                 channel
               }, {
                 sort: 3,
                 name: 'links',
                 state: true,
-                description: 'Запретить писать ссылки в чат ансабам. Удаление сообщения и таймаут на 10 секунд',
+                description: Strings.disallowWritingLinksUnsubsDeleteAndTimeout10Seconds,
                 channel
               }, {
                 sort: 4,
                 name: 'songrequest',
                 state: true,
-                description: 'Заказ видео в чате',
+                description: Strings.orderVideoChat,
                 channel
               }, {
                 sort: 5,
                 name: 'songforunsub',
                 state: false,
-                description: 'Разрешить заказ видео ансабам',
+                description: Strings.allowOrderingVideoUnsubs,
                 channel
               }, {
                 sort: 6,
                 name: 'songforpoints',
                 state: false,
-                description: 'Заказ видео за баллы канала (Не включайте если баллы на канале отключены или недоступны)',
+                description: Strings.orderVideoChannelPointsDontEnableIfPointsDisabledOrUnavailable,
                 channel
               }, {
                 sort: 7,
                 name: 'songforpointsprice',
                 state: false,
                 value: 1000,
-                description: 'Цена в баллах канала за заказ видео',
+                description: Strings.priceChannelPointsForOrderingVideo,
                 channel
               }, {
                 sort: 8,
                 name: 'changegame',
                 state: true,
-                description: 'Смена категории стрима командой',
+                description: Strings.changeStreamCategoryByCommand,
                 channel
               }, {
                 sort: 9,
                 name: 'changetitle',
                 state: true,
-                description: 'Смена названия стрима командой',
+                description: Strings.changeStreamTitleByCommand,
                 channel
               }, {
                 sort: 10,
                 name: 'poll',
                 state: true,
-                description: 'Создание голосования командой',
+                description: Strings.createVoteByCommand,
                 channel
               }, {
                 sort: 11,
                 name: 'subscription',
                 state: true,
-                description: 'Уведомлять в чате о новый подписке',
+                description: Strings.chatNotifyAboutNewSub,
                 channel
               }, {
                 sort: 12,
                 name: 'resub',
                 state: true,
-                description: 'Уведомлять в чате о переподписке',
+                description: Strings.chatNotifyAboutNewResub,
                 channel
               }, {
                 sort: 13,
                 name: 'subgift',
                 state: true,
-                description: 'Уведомлять в чате о подарочной подписке',
+                description: Strings.chanNotifyAboutGiftSub,
                 channel
               }, {
                 sort: 14,
                 name: 'giftpaidupgrade',
                 state: true,
-                description: 'Уведомлять в чате о продлении подарочной подписки',
+                description: Strings.chanNotifyAboutRenewalGiftSub,
                 channel
               }, {
                 sort: 15,
                 name: 'anongiftpaidupgrade',
                 state: true,
-                description: 'Уведомлять в чате о продлении анонимной подарочной подписки',
+                description: Strings.chanNotifyAboutRenewalAnonGiftSub,
                 channel
               }, {
                 sort: 16,
                 name: 'raided',
                 state: true,
-                description: 'Уведомлять в чате о рейде',
+                description: Strings.chatNotifyAboutRaid,
                 channel
               }, {
                 sort: 17,
                 name: 'cheer',
                 state: true,
-                description: 'Уведомлять в чате о донате битс',
+                description: Strings.chatNotifyAboutDonateBits,
                 channel
               }
             ]
@@ -430,9 +431,9 @@ router.get('/api/settings/all', (req, res) => {
               .catch(error => res.status(500).json({ error }))
           }
         })
-        .catch(error => res.status(500).json({ error: 'Unable to get list of settings' }))
+        .catch(error => res.status(500).json({ error: Strings.unableGetSettings }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 // toggle setting state
@@ -444,11 +445,11 @@ router.put('/api/settings/toggle', (req, res) => {
       const channel = data.login
       const { name, state, value } = req.body
 
-      if (!channel) return res.status(400).json({ error: 'Channel name does not exist' })
-      if (!name || state === undefined || !channel) return res.status(400).json({ error: 'Empty request' })
-      if (typeof state !== 'boolean') res.status(400).json({ error: 'State must be boolean' })
+      if (!channel) return res.status(400).json({ error: Strings.channelNotExist })
+      if (!name || state === undefined || !channel) return res.status(400).json({ error: Strings.emptyRequest })
+      if (typeof state !== 'boolean') res.status(400).json({ error: Strings.stateMustBeBoolean })
       if (!!value) {
-        if (!Number.isInteger(value)) return res.status(400).json({ error: 'Value must be a number' })
+        if (!Number.isInteger(value)) return res.status(400).json({ error: Strings.valueMustBeNumber })
       }
 
       SettingsDB.updateOne({ name, channel }, { state, value })
@@ -456,9 +457,9 @@ router.put('/api/settings/toggle', (req, res) => {
           cachegoose.clearCache('cache-setting-' + name + '-for-' + channel)
           res.json({ success: true, state, value })
         })
-        .catch(error => res.status(500).json({ error: 'Unable to save setting' }))
+        .catch(error => res.status(500).json({ error: Strings.unableSaveSetting }))
     })
-    .catch(error => res.status(401).json({ error: 'Access Denied' }))
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 
@@ -625,7 +626,7 @@ router.get('/api/games', (req, res) => {
           .catch(error => res.status(500).json({ error }))
       }
     })
-    .catch(error => res.status(500).json({ error: 'Unable to get list of games' }))
+    .catch(error => res.status(500).json({ error: Strings.unableGetGames }))
 }),
 
 
@@ -633,11 +634,11 @@ router.get('/api/games', (req, res) => {
 router.get('/api/invite/add', (req, res) => {
   const { channel } = req.query
 
-  if (!channel) return res.status(400).json({ error: 'Empty request' })
+  if (!channel) return res.status(400).json({ error: Strings.emptyRequest })
 
   InvitesDB.findOrCreate({ channel })
     .then(data => res.json(data))
-    .catch(error => res.status(500).json({ error: 'Unable to create invite' }))
+    .catch(error => res.status(500).json({ error: Strings.unableCreateInvite }))
 }),
 
 

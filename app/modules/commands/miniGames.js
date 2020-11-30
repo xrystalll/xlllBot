@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { checkSettings, declOfNum } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 
@@ -16,17 +17,17 @@ const cockSize = (channel, userName, args) => {
 
       if (!targetUser) {
         if (size > 15) {
-          client.say(channel, `@${userName} Вау! ${size} ${declOfNum(size, ['синтиметр', 'сантиметра', 'сантиметров'])} PogChamp`)
+          client.say(channel, `@${userName} ${Strings.wow} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.pogChamp}`)
         } else {
-          client.say(channel, `@${userName} у тебя ${size} ${declOfNum(size, ['синтиметр', 'сантиметра', 'сантиметров'])}. Не расстраивайся LUL`)
+          client.say(channel, `@${userName} ${Strings.youHave} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])}. ${Strings.dontWorry} ${Strings.lul}`)
         }
       } else {
         if (targetUser === channel) return
 
         if (size > 15) {
-          client.say(channel, `У ${targetUser} ${size} ${declOfNum(size, ['синтиметр', 'сантиметра', 'сантиметров'])} PogChamp`)
+          client.say(channel, `${targetUser} ${Strings.has} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.pogChamp}`)
         } else {
-          client.say(channel, `У ${targetUser} ${size} ${declOfNum(size, ['синтиметр', 'сантиметра', 'сантиметров'])} LUL`)
+          client.say(channel, `${targetUser}} ${Strings.has} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.lul}`)
         }
       }
     }

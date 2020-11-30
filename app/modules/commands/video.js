@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { checkSettings, checkYTUrl, youtubeId } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 const VideosDB = require(path.join(__dirname, '..', 'models', 'VideosDB'))
@@ -30,11 +31,11 @@ const createVideo = ({ url, channel, username, price }, io) => {
         .then(data => {
           cachegoose.clearCache('cache-all-videos-for-' + channel)
           io.sockets.emit('new_video', data)
-          client.say(channel, `@${username} видео добавлено`)
+          client.say(channel, `@${username} ${Strings.videoAdded}`)
         })
         .catch(error => console.error(error))
     })
-    .catch(() => console.error('Video does exist'))
+    .catch(() => client.say(channel, Strings.videoDoesExist))
 }
 
 const addVideo = (channel, state, args, io) => {
@@ -66,7 +67,7 @@ const addVideo = (channel, state, args, io) => {
           }
         })
       })
-    } else client.say(channel, 'Возможность заказывать видео выключена!')
+    } else client.say(channel, Strings.abilityOrderVideosDisabled)
   })
 }
 

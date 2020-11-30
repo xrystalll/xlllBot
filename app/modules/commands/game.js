@@ -1,5 +1,6 @@
 const path = require('path')
 const config = require(path.join(__dirname, '..', '..', 'config', 'default.json'))
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { twitchApi, checkSettings } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 const GamesDB = require(path.join(__dirname, '..', 'models', 'GamesDB'))
@@ -20,7 +21,7 @@ const game = (channel, roomId, args) => {
           }
         })
         .catch(err => console.error(err))
-    } else client.say(channel, 'Возможность менять категорию стрима командой выключена!')
+    } else client.say(channel, Strings.abilityToChangeStreamSategoryWithCommandDisabled)
   })
 }
 
@@ -34,11 +35,11 @@ const setGame = (channel, roomId, game) => {
     }).then(data => {
       if (!data) throw Error
 
-      client.say(channel, `Установлена категория - ${gameData.data[0].name}`)
+      client.say(channel, `${Strings.categorySet} - ${gameData.data[0].name}`)
     })
-    .catch(err => client.say(channel, 'Не удалось установить категорию'))
+    .catch(err => client.say(channel, Strings.failedSetCategory))
   })
-  .catch(err => client.say(channel, 'Не удалось установить категорию'))
+  .catch(err => client.say(channel, Strings.failedSetCategory))
 }
 
 module.exports = { game }

@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { declOfNum } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 
@@ -13,7 +14,7 @@ const timeOutUser = (channel, args) => {
   if (targetUser === channel) return
 
   client.timeout(channel, targetUser, timeOutDuration)
-    .then(() => client.say(channel, `@${targetUser} ты в муте на ${timeOutDuration} ${declOfNum(timeOutDuration, ['секунду', 'секунды', 'секунд'])} LUL`))
+    .then(() => client.say(channel, `@${targetUser} ${Strings.youAreInMuteOn} ${timeOutDuration} ${declOfNum(timeOutDuration, [Strings.second, Strings.seconds, Strings.manySeconds])} ${Strings.lul}`))
     .catch(err => console.error(err))
 }
 
@@ -40,7 +41,7 @@ const unbanUser = (channel, args) => {
   if (targetUser === channel) return
 
   client.unban(channel, targetUser)
-    .then(() => client.say(channel, `@${targetUser} тебя разбанили, но я слежу за тобой BCWarrior`))
+    .then(() => client.say(channel, `@${targetUser} ${Strings.youWereUnbannedButImWatchingYou} ${Strings.bCWarrior}`))
     .catch(err => console.error(err))
 }
 

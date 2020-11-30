@@ -1,4 +1,5 @@
 const path = require('path')
+const Strings = require(path.join(__dirname, '..', '..', 'config', 'strings.json'))
 const { twitchApi, timeFormat } = require(path.join(__dirname, '..', 'Utils'))
 const client = require(path.join(__dirname, '..', 'client'))
 
@@ -11,7 +12,7 @@ const old = (channel, state, args, checkBroadcasterPermission) => {
   if (!targetUser) {
 
     if (checkBroadcasterPermission()) {
-      client.say(channel, `@${userName} ты хочешь узнать подписан ли ты сам на себя? FailFish`)
+      client.say(channel, `@${userName} ${Strings.doYouWantKnowYouAreSubscribedToYourself} ${Strings.failFish}`)
       return
     }
 
@@ -21,19 +22,14 @@ const old = (channel, state, args, checkBroadcasterPermission) => {
       const twitchData = data.data
 
       if (twitchData.length) {
-        client.say(channel, `@${userName} подписан на канал ${channel} ${timeFormat(twitchData[0].followed_at)} B)`)
+        client.say(channel, `@${userName} ${Strings.subscribedToChannel} ${channel} ${timeFormat(twitchData[0].followed_at)} ${Strings.b}`)
       } else {
-        client.say(channel, `@${userName} ты не подписан NotLikeThis`)
+        client.say(channel, `@${userName} ${Strings.youAreNotSubscribed} ${Strings.notLikeThis}`)
       }
     })
     .catch(err => console.error(err))
 
   } else {
-
-    if (targetUser === userName) {
-      client.say(channel, `@${userName} подписан ли ${targetUser} сам на себя? CoolStoryBob`)
-      return
-    }
 
     twitchApi(channel, 'GET', '/users', { urlParams: { login: targetUser } }).then(data => {
       if (!data) return
@@ -47,9 +43,9 @@ const old = (channel, state, args, checkBroadcasterPermission) => {
           const twitchData = data.data
 
           if (twitchData.length) {
-            client.say(channel, `@${userName}, ${targetUser} подписан на канал ${channel} ${timeFormat(twitchData[0].followed_at)} B)`)
+            client.say(channel, `@${userName}, ${targetUser} ${Strings.subscribedToChannel} ${channel} ${timeFormat(twitchData[0].followed_at)} ${Strings.b}`)
           } else {
-            client.say(channel, `@${userName}, ${targetUser} не подписан NotLikeThis`)
+            client.say(channel, `@${userName}, ${targetUser} ${Strings.notSubscribed} ${Strings.notLikeThis}`)
           }
         })
         .catch(err => console.error(err))
