@@ -6,6 +6,7 @@
       "components/*": ["src/components/*"],
       "hooks/*": ["src/hooks/*"],
       "instance/*": ["src/instance/*"],
+      "language/*": ["src/language/*"],
       "store/*": ["src/store/*"]
     },
     "strict": true

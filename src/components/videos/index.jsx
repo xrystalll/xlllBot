@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getCookie } from 'components/support/Utils';
 import { socket } from 'instance/Socket';
 import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import YouTube from 'react-youtube';
 import CustomScrollbar from '../support/CustomScrollbar';
 import { VideoItem } from './VideoItem';
@@ -27,7 +28,7 @@ class Videos extends Component {
   }
 
   componentDidMount() {
-    document.title = 'xlllBot - Stream Dj'
+    document.title = 'xlllBot - ' + Strings.streamDj[this.context.state.lang]
     this._isMounted = true
     this.context.dispatch({ type: 'SET_MINI', payload: false })
     this.subscribeToEvents()
@@ -131,7 +132,7 @@ class Videos extends Component {
   }
 
   render() {
-    const { response, playIndex, playing, noData } = this.context.state
+    const { response, playIndex, playing, noData, lang } = this.context.state
     const ytOptions = {
       width: '560',
       height: '384',
@@ -143,13 +144,17 @@ class Videos extends Component {
 
     return (
       <Layout
-        title="Stream Dj"
-        subTitle="Dashboard"
+        title={Strings.streamDj[lang]}
+        subTitle={Strings.dashboard[lang]}
         videoLayout={true}
         action={
           <div className="controls">
-            <Fab icon={playing ? 'pause' : 'play_arrow'} title="Play/Pause" onClick={this.onPlayPause} className="inheader" />
-            <Fab icon="skip_next" title="Skip" onClick={this.skip} className="inheader small" />
+            <Fab
+              icon={playing ? 'pause' : 'play_arrow'}
+              title={Strings.playPause[lang]}
+              onClick={this.onPlayPause} className="inheader"
+            />
+            <Fab icon="skip_next" title={Strings.skip[lang]} onClick={this.skip} className="inheader small" />
           </div>
         }
       >
@@ -167,7 +172,7 @@ class Videos extends Component {
                   onEnd={this.skip}
                 />
               ) : (
-                !noData ? <Loader /> : <Errorer message="No videos yet" />
+                !noData ? <Loader /> : <Errorer message={Strings.noVideosYet[lang]} />
               )}
             </div>
 

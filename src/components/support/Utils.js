@@ -17,11 +17,17 @@ export const counter = (count = 0) => {
   if (count >= 1e9 && count < 1e12) return `${(count / 1e9).toFixed(1)}B`
 }
 
-export const timeFormat = (timestamp) => {
+export const timeFormat = (timestamp, lang = 'en') => {
   const d = new Date()
   const t = new Date(Number(timestamp))
 
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthsRu = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Отк', 'Ноя', 'Дек']
+  const months = lang === 'ru' ? monthsRu : monthsEn
+
+  const today = lang === 'ru' ? 'сегодня в' : 'today at'
+  const yesterday = lang === 'ru' ? 'вчера в' : 'yesterday at'
+  const at = lang === 'ru' ? 'в' : 'at'
 
   const curYear = d.getFullYear()
   const curMonth = months[d.getMonth()]
@@ -37,11 +43,11 @@ export const timeFormat = (timestamp) => {
   year !== curYear ? thisYear = ` ${year}` : thisYear = ''
 
   if (`${date}.${month}.${year}` === `${curDate}.${curMonth}.${curYear}`) {
-    return `today at ${hour}:${min}`
+    return `${today} ${hour}:${min}`
   } else if (`${date}.${month}.${year}` === `${curDate - 1}.${curMonth}.${curYear}`) {
-    return `yesterday at ${hour}:${min}`
+    return `${yesterday} ${hour}:${min}`
   } else {
-    return `${date} ${month}${thisYear} at ${hour}:${min}`
+    return `${date} ${month}${thisYear} ${at} ${hour}:${min}`
   }
 }
 

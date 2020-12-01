@@ -1,13 +1,18 @@
 import React, {createContext, useReducer} from 'react';
 import Reducer from './Reducer';
 
+const langs = ['ru', 'en']
+const langFromLS = langs.find(i => i === localStorage.getItem('lang'))
+const langFromNL = langs.find(i => i === window.navigator.language)
+const lang = langFromLS ? langFromLS : langFromNL ? langFromNL : 'en'
 const initialState = {
   response: [],
   playIndex: 0,
   playing: false,
   time: 0,
   noData: false,
-  mini: false
+  mini: false,
+  lang
 }
 
 const StoreContext = createContext(initialState)

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { getCookie, clearCookies } from 'components/support/Utils';
 import { apiEndPoint } from 'config';
 import { SettingItem } from './SettingItem';
@@ -12,11 +14,12 @@ import { toast } from 'react-toastify';
 const Settings = () => {
   const history = useHistory()
 
+  const { state } = useContext(StoreContext)
   const [items, setItems] = useState([])
   const [noData, setNoData] = useState(false)
 
   useEffect(() => {
-    document.title = 'xlllBot - Settings'
+    document.title = 'xlllBot - ' + Strings.settings[state.lang]
     const fetchSettings = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/settings/all', {
@@ -26,7 +29,7 @@ const Settings = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error('You are not authorized')
+          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -44,7 +47,7 @@ const Settings = () => {
     }
 
     fetchSettings()
-  }, [history])
+  }, [history, state.lang])
 
   const changeSetting = (props) => {
     fetch(apiEndPoint + '/api/settings/toggle', {
@@ -58,21 +61,21 @@ const Settings = () => {
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
-          toast.success('Settings successfully saved')
+          toast.success(Strings.settingsSuccessfullySaved[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to save settings'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToSaveSettings[state.lang]))
   }
 
   return (
-    <Layout title="Settings" subTitle="Dashboard">
-      <Card title="Settings list">
+    <Layout title={Strings.settings[state.lang]} subTitle={Strings.dashboard[state.lang]}>
+      <Card title={Strings.settingsList[state.lang]}>
         {items.length > 0 ? (
           items.map(item => (
             <SettingItem key={item._id} data={item} changeSetting={changeSetting} />
           ))
         ) : (
-          !noData ? <Loader /> : <Errorer message="Settings not exists" />
+          !noData ? <Loader /> : <Errorer message={Strings.noSettings[state.lang]} />
         )}
       </Card>
     </Layout>

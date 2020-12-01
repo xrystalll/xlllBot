@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import Card from 'components/partials/Card';
 import Switch from 'components/partials/Switch';
 
 export const BotModerator = ({ botUsername }) => {
+  const { state } = useContext(StoreContext)
+
   return (
     <Card>
       <div className="error_title">
         <div className="alert_info">
           <i className="material-icons-outlined">error_outline</i>
-          {botUsername} не является модератором в чате!
+          {botUsername} {Strings.isNotAModeratorInTheChat[state.lang]}
         </div>
       </div>
     </Card>
   )
 }
 
-export const BotActive = ({ state, botUsername, changeActive }) => {
+export const BotActive = ({ state: chekboxState, botUsername, changeActive }) => {
+  const { state } = useContext(StoreContext)
+
   return (
     <Card>
-      <div className={state ? 'success_title' : 'error_title'}>
+      <div className={chekboxState ? 'success_title' : 'error_title'}>
         <div className="alert_info">
           <i className="material-icons-outlined">error_outline</i>
-          <Switch onChange={changeActive.bind(this)} checked={state}>
-            {state ? `${botUsername} подключен к чату` : `${botUsername} не активен! Нажмите чтобы активировать`}
+          <Switch onChange={changeActive.bind(this)} checked={chekboxState}>
+            {chekboxState
+              ? `${botUsername} ${Strings.connectedToChat[state.lang]}`
+              : `${botUsername} ${Strings.isNotActiveClickToActivate[state.lang]}`
+            }
           </Switch>
         </div>
       </div>

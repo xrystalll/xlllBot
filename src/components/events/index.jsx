@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { getCookie } from 'components/support/Utils';
 import { socket } from 'instance/Socket';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { EventItem } from './EventItem';
 import Layout from 'components/partials/Layout';
 import Card from 'components/partials/Card';
@@ -9,6 +11,7 @@ import Errorer from 'components/partials/Errorer';
 import { toast } from 'react-toastify';
 
 class Events extends Component {
+  static contextType = StoreContext;
   _isMounted = false;
   constructor() {
     super();
@@ -20,7 +23,7 @@ class Events extends Component {
   }
 
   componentDidMount() {
-    document.title = 'xlllBot - Events'
+    document.title = 'xlllBot - ' + Strings.events[this.context.state.lang]
     this._isMounted = true
     this.subscribeToEvents()
     socket.emit('event_items', { channel: getCookie('login') })
@@ -45,9 +48,9 @@ class Events extends Component {
 
       if (data.deletedCount > 0) {
         this.setState({ response: [], noData: true })
-        toast.success('Old events successfully deleted')
+        toast.success(Strings.oldEventsSuccessfullyDeleted[this.context.state.lang])
       } else {
-        toast.info('Nothing to clear')
+        toast.info(Strings.nothingToClear[this.context.state.lang])
       }
     })
     socket.on('new_event', (data) => {
@@ -66,12 +69,12 @@ class Events extends Component {
     const clearVis = showClear ? '' : ' none'
 
     return (
-      <Layout title="Events" subTitle="Dashboard">
-        <Card title="Chat events by last 24 hrs" action={
+      <Layout title={Strings.events[this.context.state.lang]} subTitle={Strings.dashboard[this.context.state.lang]}>
+        <Card title={Strings.chatEventsByLast24Hrs[this.context.state.lang]} action={
           !noData && (
             <div className={`clear${clearVis}`} onClick={this.deleteEvents}>
               <i className="material-icons">delete</i>
-              <span>Delete all events</span>
+              <span>{Strings.deleteAllEvents[this.context.state.lang]}</span>
             </div>
           )
         }>
@@ -80,7 +83,7 @@ class Events extends Component {
               <EventItem key={item._id} data={item} />
             ))
           ) : (
-            !noData ? <Loader /> : <Errorer message="No events yet" />
+            !noData ? <Loader /> : <Errorer message={Strings.noEventsYet[this.context.state.lang]} />
           )}
         </Card>
       </Layout>

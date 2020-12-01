@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { useForm } from 'hooks/useForm';
 import { toast } from 'react-toastify';
 
 export const CommandItem = ({ data, editCommand, deleteCommand }) => {
+  const { state } = useContext(StoreContext)
   const { values, handleChange } = useForm({ tag: data.tag, text: data.text, countdown: data.countdown })
 
   const [editAction, toggleEditAction] = useState(false)
@@ -29,17 +32,17 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
     const text = values.text.trim()
 
     if (tag.length < 1) {
-      toast.error('Enter command tag')
+      toast.error(Strings.enterCommandTag[state.lang])
       setErrOne(true)
       setErrTwo(false)
       setErrThree(false)
     } else if (text.length < 1) {
-      toast.error('Enter text')
+      toast.error(Strings.enterText[state.lang])
       setErrOne(false)
       setErrTwo(true)
       setErrThree(false)
     } else if (values.countdown.length < 1) {
-      toast.error('Enter countdown')
+      toast.error(Strings.enterCountdown[state.lang])
       setErrOne(false)
       setErrTwo(false)
       setErrThree(true)
@@ -61,7 +64,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
         type="text"
         name="tag"
         onChange={handleChange}
-        placeholder="Enter command"
+        placeholder={Strings.command[state.lang]}
         defaultValue={data.tag}
       />
       <input
@@ -69,7 +72,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
         type="text"
         name="text"
         onChange={handleChange}
-        placeholder="Enter text"
+        placeholder={Strings.text[state.lang]}
         defaultValue={data.text}
       />
       <input
@@ -77,19 +80,31 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
         type="number"
         name="countdown"
         onChange={handleChange}
-        placeholder="Enter countdown (seconds)"
+        placeholder={Strings.countdownSeconds[state.lang]}
         defaultValue={values.countdown}
       />
       <div className="command_actions">
         {!editAction ? (
           <div className="action_block">
-            <i onClick={changeEditState} className="command_edit material-icons" title="Edit command">create</i>
-            <i onClick={deleteCommand.bind(this, data._id)} className="item_delete command_delete material-icons" title="Delete command">delete</i>
+            <i onClick={changeEditState} className="command_edit material-icons" title={Strings.editCommand[state.lang]}>create</i>
+            <i
+              onClick={deleteCommand.bind(this, data._id)}
+              className="item_delete command_delete material-icons"
+              title={Strings.deleteCommand[state.lang]}
+            >
+              delete
+            </i>
           </div>
         ) : (
           <div className="action_block">
-            <i onClick={changeEditState} className="item_cancel command_edit_cancel material-icons" title="Cancel changes">close</i>
-            <input className="btn" type="submit" value="Save" />
+            <i
+              onClick={changeEditState}
+              className="item_cancel command_edit_cancel material-icons"
+              title={Strings.cancelChanges[state.lang]}
+            >
+              close
+            </i>
+            <input className="btn" type="submit" value={Strings.save[state.lang]} />
           </div>
         )}
       </div>

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { useForm } from 'hooks/useForm';
 import { toast } from 'react-toastify';
 
 export const NewBadwordItem = ({ addBadword, toggleAdd }) => {
+  const { state } = useContext(StoreContext)
   const { values, handleChange } = useForm({ word: '', duration: 300 })
 
   const [errOne, setErrOne] = useState(false)
@@ -17,11 +20,11 @@ export const NewBadwordItem = ({ addBadword, toggleAdd }) => {
     const word = values.word.trim().toLowerCase()
 
     if (word.length < 1) {
-      toast.error('Enter word')
+      toast.error(Strings.enterBadword[state.lang])
       setErrOne(true)
       setErrTwo(false)
     } else if (values.duration.length < 1) {
-      toast.error('Enter duration')
+      toast.error(Strings.enterDuration[state.lang])
       setErrOne(false)
       setErrTwo(true)
     } else {
@@ -36,19 +39,19 @@ export const NewBadwordItem = ({ addBadword, toggleAdd }) => {
         type="text"
         name="word"
         onChange={handleChange}
-        placeholder="Enter badword"
+        placeholder={Strings.badword[state.lang]}
       />
       <input
         className={'input_text badword_duration active' + errorTwo}
         type="number"
         name="duration"
         onChange={handleChange}
-        placeholder="Enter ban duration (seconds)"
+        placeholder={Strings.banDurationSeconds[state.lang]}
         defaultValue={values.duration}
       />
       <div className="channel_actions">
-        <i onClick={toggleAdd} className="item_cancel badword_new_cancel material-icons" title="Cancel new badword">close</i>
-        <input className="btn" type="submit" value="Add" />
+        <i onClick={toggleAdd} className="item_cancel badword_new_cancel material-icons" title={Strings.cancelNewBadword[state.lang]}>close</i>
+        <input className="btn" type="submit" value={Strings.add[state.lang]} />
       </div>
     </form>
   )

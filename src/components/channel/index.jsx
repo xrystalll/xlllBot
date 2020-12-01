@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCookie, clearCookies } from 'components/support/Utils';
 import { botUsername, apiEndPoint } from 'config';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { BotModerator, BotActive } from './BotAlerts';
 import { TwitchPlayer } from './TwitchPlayer';
 import { TwitchChat } from './TwitchChat';
@@ -13,12 +15,13 @@ import { toast } from 'react-toastify';
 const Channel = () => {
   const history = useHistory()
 
+  const { state } = useContext(StoreContext)
   const [channel, setChannel] = useState('')
   const [isModerator, setModerator] = useState(true)
   const [botActive, setActive] = useState(false)
 
   useEffect(() => {
-    document.title = 'xlllBot - Channel'
+    document.title = 'xlllBot - ' + Strings.channel[state.lang]
     const fetchChannel = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/channel', {
@@ -28,7 +31,7 @@ const Channel = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error('You are not authorized')
+          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -50,7 +53,7 @@ const Channel = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error('You are not authorized')
+          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -68,7 +71,7 @@ const Channel = () => {
 
     fetchChannel()
     fetchModerators()
-  }, [history])
+  }, [history, state.lang])
 
   const changeActive = (e) => {
     const bool = e.currentTarget.checked
@@ -85,12 +88,12 @@ const Channel = () => {
       .then(data => {
         if (!data.error) {
           setActive(true)
-          toast.success('Bot successfully joined to chat')
+          toast.success(Strings.botSuccessfullyJoinedToChat[state.lang])
         } else throw Error(data.error)
       })
       .catch(err => {
         setActive(false)
-        toast.error(err ? err.message : 'Failed to join')
+        toast.error(err ? err.message : Strings.failedToJoin[state.lang])
       })
   }
 
@@ -104,17 +107,17 @@ const Channel = () => {
       .then(data => {
         if (!data.error) {
           setActive(false)
-          toast.success('Bot successfully left chat')
+          toast.success(Strings.botSuccessfullyLeftChat[state.lang])
         } else throw Error(data.error)
       })
       .catch(err => {
         setActive(false)
-        toast.error(err ? err.message : 'Failed to leave from chat')
+        toast.error(err ? err.message : Strings.failedToLeaveFromChat[state.lang])
       })
   }
 
   return (
-    <Layout title="Channel" subTitle="Dashboard" videoLayout={true}>
+    <Layout title={Strings.channel[state.lang]} subTitle={Strings.dashboard[state.lang]} videoLayout={true}>
       {!isModerator && <BotModerator botUsername={botUsername} />}
 
       <BotActive state={botActive} botUsername={botUsername} changeActive={changeActive} />

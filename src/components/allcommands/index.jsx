@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { apiEndPoint } from 'config';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { CommandItem } from './CommandItem';
 import Layout from 'components/partials/Layout';
 import Card from 'components/partials/Card';
@@ -7,6 +9,7 @@ import { Loader } from 'components/partials/Loader';
 import Errorer from 'components/partials/Errorer';
 
 const AllCommand = () => {
+  const { state } = useContext(StoreContext)
   const [items, setItems] = useState([])
   const [noData, setNoData] = useState(false)
   const commands = {
@@ -51,7 +54,7 @@ const AllCommand = () => {
   }
 
   useEffect(() => {
-    document.title = 'xlllBot - All Commands'
+    document.title = 'xlllBot - ' + Strings.allCommands[state.lang]
     const fetchGames = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/games')
@@ -70,27 +73,27 @@ const AllCommand = () => {
     }
 
     fetchGames()
-  }, [])
+  }, [state.lang])
 
   return (
-    <Layout title="General commands">
-      <Card title="Commands list">
+    <Layout title={Strings.generalCommands[state.lang]}>
+      <Card title={Strings.commandsList[state.lang]}>
         {commands.all.map((item, index) => (
           <CommandItem key={index + '_all'} data={item} type="full" />
         ))}
-        <h4 className="sub_header">For moderators and owner</h4>
+        <h4 className="sub_header">{Strings.forModeratorsAndOwner[state.lang]}</h4>
         {commands.mods.map((item, index) => (
           <CommandItem key={index + '_mods'} data={item} type="full" />
         ))}
       </Card>
 
-      <Card title="Short categores names list">
+      <Card title={Strings.shortCategoresNamesList[state.lang]}>
         {items.length > 0 ? (
           items.map(item => (
             <CommandItem key={item._id} data={item} type="short" />
           ))
         ) : (
-          !noData ? <Loader /> : <Errorer message="Commands not exists" />
+          !noData ? <Loader /> : <Errorer message={Strings.noShortNames[state.lang]} />
         )}
       </Card>
     </Layout>

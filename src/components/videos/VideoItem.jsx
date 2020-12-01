@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { toHHMMSS, counter } from 'components/support/Utils';
 import './style.css';
 
 export const VideoItem = ({ index, playIndex, data, chooseVideo, deleteVideo }) => {
+  const { state } = useContext(StoreContext)
   const selected = playIndex === index ? ' selected' : ''
 
   return (
     <li
       className={'video_item' + selected}
       onClick={chooseVideo.bind(this, { id: data.yid, index })}
-      title={`Video requested: ${data.from.username}\nPrice: ${data.from.price}`}
+      title={`${Strings.videoRequested[state.lang]}: ${data.from.username}\n${Strings.price[state.lang]}: ${data.from.price}`}
     >
       <div className="choose_vid">
         <span className="vid_thumb" style={{ 'backgroundImage': `url(${data.thumb})` }}>
@@ -23,7 +26,7 @@ export const VideoItem = ({ index, playIndex, data, chooseVideo, deleteVideo }) 
         <div
           className="remove_vid"
           onClick={deleteVideo.bind(this, data._id)}
-          title="Remove video from playlist"
+          title={Strings.removeVideoFromPlaylist[state.lang]}
         >
           <i className="material-icons">delete</i>
         </div>

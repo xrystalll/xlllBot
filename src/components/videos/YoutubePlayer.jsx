@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getCookie } from 'components/support/Utils';
 import { socket } from 'instance/Socket';
 import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import YouTube from 'react-youtube';
 import { Loader } from 'components/partials/Loader';
 import Errorer from 'components/partials/Errorer';
@@ -102,7 +103,7 @@ class YouTubePlayer extends Component {
   }
 
   render() {
-    const { response, playIndex, noData } = this.context.state
+    const { response, playIndex, noData, lang } = this.context.state
     const ytOptions = {
       width: '560',
       height: '384',
@@ -116,7 +117,7 @@ class YouTubePlayer extends Component {
       <Draggable>
         <div className="vid-container sticky">
           <div className="mini_overlay">
-            <i className="material-icons close_mini" onClick={this.hideMiniPlayer} title="Close miniplayer">close</i>
+            <i className="material-icons close_mini" onClick={this.hideMiniPlayer} title={Strings.closeMiniplayer[lang]}>close</i>
           </div>
           {response.length > 0 ? (
             <YouTube
@@ -129,7 +130,7 @@ class YouTubePlayer extends Component {
               onEnd={this.skip}
             />
           ) : (
-            !noData ? <Loader /> : <Errorer message="No videos yet" />
+            !noData ? <Loader /> : <Errorer message={Strings.noVideosYet[lang]} size={96} />
           )}
         </div>
       </Draggable>

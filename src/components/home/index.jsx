@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { getCookie } from 'components/support/Utils';
 import { apiEndPoint } from 'config';
 import { socket } from 'instance/Socket';
 import './style.css';
 
 class Home extends Component {
+  static contextType = StoreContext;
   _isMounted = false;
   constructor() {
     super();
@@ -53,10 +56,10 @@ class Home extends Component {
         <div className="container">
           <div className="landing_content">
             <h1 className="main_head">xlllBot</h1>
-            <div className="main_sub">Chat bot for Twitch</div>
+            <div className="main_sub">{Strings.chatBotForTwitch[this.context.state.lang]}</div>
             <div className="auth_block_main">
               {this.state.isAuth ? (
-                <Link className="twitch_btn_main" to="/dashboard/channel">Open dashboard</Link>
+                <Link className="twitch_btn_main" to="/dashboard/channel">{Strings.openDashboard[this.context.state.lang]}</Link>
               ) : (
                 <div onClick={this.openAuth.bind(this, apiEndPoint + '/auth/twitch')} className="twitch_btn_main">
                   <svg className="tw-glitch-logo__svg" overflow="visible" width="40px" height="40px" version="1.1" viewBox="0 0 40 40" x="0px" y="0px">
@@ -64,7 +67,7 @@ class Home extends Component {
                     <polygon className="tw-glitch-logo__face" points="26 25 30 21 30 10 14 10 14 25 18 25 18 29 22 25" transform="translate(0 0)" />
                     <path className="tw-glitch-logo__eyes" d="M20,14 L22,14 L22,20 L20,20 L20,14 Z M27,14 L27,20 L25,20 L25,14 L27,14 Z" transform="translate(0 0)" />
                   </svg>
-                  Sign in via Twitch
+                  {Strings.signInViaTwitch[this.context.state.lang]}
                 </div>
               )}
             </div>

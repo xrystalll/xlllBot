@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { useForm } from 'hooks/useForm';
 import { toast } from 'react-toastify';
 
 export const NewCommandItem = ({ addCommand, toggleAdd }) => {
+  const { state } = useContext(StoreContext)
   const { values, handleChange } = useForm({ tag: '', text: '', countdown: 0 })
 
   const [errOne, setErrOne] = useState(false)
@@ -20,17 +23,17 @@ export const NewCommandItem = ({ addCommand, toggleAdd }) => {
     const text = values.text.trim()
 
     if (tag.length < 1) {
-      toast.error('Enter command tag')
+      toast.error(Strings.enterCommandTag[state.lang])
       setErrOne(true)
       setErrTwo(false)
       setErrThree(false)
     } else if (text.length < 1) {
-      toast.error('Enter text')
+      toast.error(Strings.enterText[state.lang])
       setErrOne(false)
       setErrTwo(true)
       setErrThree(false)
     } else if (values.countdown.length < 1) {
-      toast.error('Enter countdown')
+      toast.error(Strings.enterCountdown[state.lang])
       setErrOne(false)
       setErrTwo(false)
       setErrThree(true)
@@ -47,26 +50,26 @@ export const NewCommandItem = ({ addCommand, toggleAdd }) => {
         type="text"
         name="tag"
         onChange={handleChange}
-        placeholder="Enter command"
+        placeholder={Strings.command[state.lang]}
       />
       <input
         className={'input_text command_text active' + errorTwo}
         type="text"
         name="text"
         onChange={handleChange}
-        placeholder="Enter text"
+        placeholder={Strings.text[state.lang]}
       />
       <input
         className={'input_text command_countdown active' + errorThree}
         type="number"
         name="countdown"
         onChange={handleChange}
-        placeholder="Enter countdown (seconds)"
+        placeholder={Strings.countdownSeconds[state.lang]}
         defaultValue={values.countdown}
       />
       <div className="command_actions">
-        <i onClick={toggleAdd} className="item_cancel command_new_cancel material-icons" title="Chancel new command">close</i>
-        <input className="btn" type="submit" value="Add" />
+        <i onClick={toggleAdd} className="item_cancel command_new_cancel material-icons" title={Strings.cancelNewCommand[state.lang]}>close</i>
+        <input className="btn" type="submit" value={Strings.add[state.lang]} />
       </div>
     </form>
   )

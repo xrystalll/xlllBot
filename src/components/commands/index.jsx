@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCookie, clearCookies } from 'components/support/Utils';
 import { apiEndPoint } from 'config';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { NewCommandItem } from './NewCommandItem';
 import { CommandItem } from './CommandItem';
 import Layout from 'components/partials/Layout';
@@ -14,12 +16,13 @@ import { toast } from 'react-toastify';
 const Commands = () => {
   const history = useHistory()
 
+  const { state } = useContext(StoreContext)
   const [showAdd, toggleAddState] = useState(false)
   const [noData, setNoData] = useState(false)
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    document.title = 'xlllBot - Commands'
+    document.title = 'xlllBot - ' + Strings.commands[state.lang]
     const fetchCommands = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/commands/all', {
@@ -29,7 +32,7 @@ const Commands = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error('You are not authorized')
+          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -48,7 +51,7 @@ const Commands = () => {
     }
 
     fetchCommands()
-  }, [history])
+  }, [history, state.lang])
 
   const toggleAdd = () => {
     toggleAddState(!showAdd)
@@ -71,10 +74,10 @@ const Commands = () => {
             setItems([])
             setNoData(true)
           }
-          toast.success('Command successfully deleted')
+          toast.success(Strings.commandSuccessfullyDeleted[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to delete command'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToDeleteCommand[state.lang]))
   }
 
   const addCommand = (props) => {
@@ -92,10 +95,10 @@ const Commands = () => {
           setNoData(false)
           setItems([data, ...items])
           toggleAdd()
-          toast.success('Command successfully added')
+          toast.success(Strings.commandSuccessfullyAdded[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to adding command'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToAddingCommand[state.lang]))
   }
 
   const editCommand = (props) => {
@@ -110,16 +113,16 @@ const Commands = () => {
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
-          toast.success('Command successfully changed')
+          toast.success(Strings.commandSuccessfullyChanged[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to change command'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToChangeCommand[state.lang]))
   }
 
   return (
-    <Layout title="Commands" subTitle="Dashboard">
-      <Card title="Commands list" action={
-        <Fab icon={showAdd ? 'close' : 'add'} title="Add new command" onClick={toggleAdd} />
+    <Layout title={Strings.commands[state.lang]} subTitle={Strings.dashboard[state.lang]}>
+      <Card title={Strings.commandsList[state.lang]} action={
+        <Fab icon={showAdd ? 'close' : 'add'} title={Strings.addNewCommand[state.lang]} onClick={toggleAdd} />
       }>
         {showAdd && <NewCommandItem addCommand={addCommand} toggleAdd={toggleAdd} />}
         {items.length > 0 ? (
@@ -132,7 +135,7 @@ const Commands = () => {
             />
           ))
         ) : (
-          !noData ? <Loader /> : <Errorer message="No commands yet" />
+          !noData ? <Loader /> : <Errorer message={Strings.noCommandsYet[state.lang]} />
         )}
       </Card>
     </Layout>

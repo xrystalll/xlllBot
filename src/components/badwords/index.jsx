@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getCookie, clearCookies } from 'components/support/Utils';
 import { apiEndPoint } from 'config';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { NewBadwordItem } from './NewBadwordItem';
 import { BadwordItem } from './BadwordItem';
 import Layout from 'components/partials/Layout';
@@ -14,12 +16,13 @@ import { toast } from 'react-toastify';
 const Badwords = () => {
   const history = useHistory()
 
+  const { state } = useContext(StoreContext)
   const [showAdd, toggleAddState] = useState(false)
   const [noData, setNoData] = useState(false)
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    document.title = 'xlllBot - Badwords'
+    document.title = 'xlllBot - ' + Strings.badwords[state.lang]
     const fetchBadwords = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/words/all', {
@@ -29,7 +32,7 @@ const Badwords = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error('You are not authorized')
+          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -48,7 +51,7 @@ const Badwords = () => {
     }
 
     fetchBadwords()
-  }, [history])
+  }, [history, state.lang])
 
   const toggleAdd = () => {
     toggleAddState(!showAdd)
@@ -71,10 +74,10 @@ const Badwords = () => {
             setItems([])
             setNoData(true)
           }
-          toast.success('Badword successfully deleted')
+          toast.success(Strings.badwordSuccessfullyDeleted[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to delete badword'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToDeleteBadword[state.lang]))
   }
 
   const addBadword = (props) => {
@@ -92,16 +95,16 @@ const Badwords = () => {
           setNoData(false)
           setItems([data, ...items])
           toggleAdd()
-          toast.success('Badword successfully added')
+          toast.success(Strings.badwordSuccessfullyAdded[state.lang])
         } else throw Error(data.error)
       })
-      .catch(err => toast.error(err ? err.message : 'Failed to adding badword'))
+      .catch(err => toast.error(err ? err.message : Strings.failedToAddingBadword[state.lang]))
   }
 
   return (
-    <Layout title="Badwords" subTitle="Dashboard">
-      <Card title="Badwords list" action={
-        <Fab icon={showAdd ? 'close' : 'add'} title="Add new badword" onClick={toggleAdd} />
+    <Layout title={Strings.badwords[state.lang]} subTitle={Strings.dashboard[state.lang]}>
+      <Card title={Strings.badwordsList[state.lang]} action={
+        <Fab icon={showAdd ? 'close' : 'add'} title={Strings.addNewBadword[state.lang]} onClick={toggleAdd} />
       }>
         {showAdd && <NewBadwordItem addBadword={addBadword} toggleAdd={toggleAdd} />}
 
@@ -114,7 +117,7 @@ const Badwords = () => {
             />
           ))
         ) : (
-          !noData ? <Loader /> : <Errorer message="No badwords yet" />
+          !noData ? <Loader /> : <Errorer message={Strings.noBadwordsYet[state.lang]} />
         )}
       </Card>
     </Layout>

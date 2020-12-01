@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 
 export const NotFound = () => {
+  const { state } = useContext(StoreContext)
   document.title = 'xlllBot - 404 Not Found'
 
   return (
@@ -9,7 +12,7 @@ export const NotFound = () => {
       <div className="authModal">
         <h2>404 Not Found</h2>
         <div className="auth_form">
-          <Link to="/" className="twitch_btn signin">Go to home page</Link>
+          <Link to="/" className="twitch_btn signin">{Strings.goToHomePage[state.lang]}</Link>
         </div>
       </div>
     </div>

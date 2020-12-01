@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { getCookie } from 'components/support/Utils';
 import CustomScrollbar from 'components/support/CustomScrollbar';
 import '././style.css';
 
 class Header extends Component {
+  static contextType = StoreContext;
   _isMounted = false;
   constructor() {
     super();
@@ -55,7 +58,7 @@ class Header extends Component {
     const menuVis = showMenu ? 'open' : ''
 
     return (
-      <>
+      <React.Fragment>
         <header id="header" className={menuVis}>
           <div className="logo">
             <i onClick={this.toggleMenu} className="logo__trigger material-icons">menu</i>
@@ -80,7 +83,7 @@ class Header extends Component {
               <li>
                 <NavLink exact to="/" onClick={this.closeMenu}>
                   <i className="nav-ic">home</i>
-                  Home
+                  {Strings.home[this.context.state.lang]}
                 </NavLink>
               </li>
               {this.isAuth && (
@@ -88,37 +91,37 @@ class Header extends Component {
                   <li>
                     <NavLink to="/dashboard/channel" onClick={this.closeMenu}>
                       <i className="nav-ic">person</i>
-                      Channel
+                      {Strings.channel[this.context.state.lang]}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/commands" onClick={this.closeMenu}>
                       <i className="material-icons">list</i>
-                      Commands
+                      {Strings.commands[this.context.state.lang]}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/badwords" onClick={this.closeMenu}>
                       <i className="nav-ic">voice_over_off</i>
-                      Badwords
+                      {Strings.badwords[this.context.state.lang]}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/videos" onClick={this.closeMenu}>
                       <i className="material-icons">playlist_play</i>
-                      Stream Dj
+                      {Strings.streamDj[this.context.state.lang]}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/events" onClick={this.closeMenu}>
                       <i className="material-icons">playlist_add_check</i>
-                      Events
+                      {Strings.events[this.context.state.lang]}
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/settings" onClick={this.closeMenu}>
                       <i className="nav-ic">settings</i>
-                      Settings
+                      {Strings.settings[this.context.state.lang]}
                     </NavLink>
                   </li>
                 </React.Fragment>
@@ -126,13 +129,13 @@ class Header extends Component {
               <li>
                 <NavLink to="/commands" onClick={this.closeMenu}>
                   <i className="material-icons">list</i>
-                  All commands
+                  {Strings.allCommands[this.context.state.lang]}
                 </NavLink>
               </li>
             </ul>
           </CustomScrollbar>
         </nav>
-      </>
+      </React.Fragment>
     )
   }
 }

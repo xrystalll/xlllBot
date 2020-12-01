@@ -52,7 +52,7 @@
   font-weight: 500;
   padding: 0 16px;
   width: 100%;
-  max-width: 340px;
+  max-width: 345px;
   user-select: none;
 }
 
@@ -72,8 +72,8 @@
   padding: 0 16px !important;
   color: var(--main-text-color);
   border: 2px solid var(--accent-color);
-  border-radius: 8px;
-  max-width: 215px;
+  border-radius: 8px; 
+  width: max-content;
   height: 44px;
   transition: box-shadow .2s ease-in, border .2s ease-in, background-color .2s ease-in;
   cursor: pointer;

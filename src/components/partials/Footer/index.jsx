@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from 'store/Store';
+import Strings from 'language/Strings';
 import { getCookie, clearCookies } from 'components/support/Utils';
 import '././style.css';
 
 const Footer = () => {
+  const { state } = useContext(StoreContext)
   const isAuth = !!getCookie('login') && !!getCookie('token')
 
   const logout = () => {
@@ -18,19 +21,19 @@ const Footer = () => {
         {isAuth && (
           <ul className="footer__menu">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">{Strings.home[state.lang]}</Link>
             </li>
               <li>
-                <Link to="/dashboard/commands">Commands</Link>
+                <Link to="/dashboard/commands">{Strings.commands[state.lang]}</Link>
               </li>
               <li>
-                <Link to="/dashboard/badwords">Badwords</Link>
+                <Link to="/dashboard/badwords">{Strings.badwords[state.lang]}</Link>
               </li>
               <li>
-                <Link to="/dashboard/settings">Settings</Link>
+                <Link to="/dashboard/settings">{Strings.settings[state.lang]}</Link>
               </li>
               <li>
-                <Link to="/" onClick={logout}>Log out</Link>
+                <Link to="/" onClick={logout}>{Strings.logOut[state.lang]}</Link>
               </li>
           </ul>
         )}
