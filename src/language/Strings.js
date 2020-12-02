@@ -334,6 +334,22 @@ const Strings = {
   'logOut': {
     ru: 'Выйти',
     en: 'Log out'
+  },
+  'openTwitchProfile': {
+    ru: 'Открыть Twitch канал',
+    en: 'Open Twitch channel'
+  },
+  'language': {
+    ru: 'Язык',
+    en: 'Language'
+  },
+  'russian': {
+    ru: 'Русский',
+    en: 'Russian'
+  },
+  'english': {
+    ru: 'Английский',
+    en: 'English'
   }
 }
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'language/Strings';
 import { getCookie } from 'components/support/Utils';
 import CustomScrollbar from 'components/support/CustomScrollbar';
+import Dropdown, { DropdownMenu } from 'components/partials/Dropdown';
 import '././style.css';
 
 class Header extends Component {
@@ -66,14 +67,9 @@ class Header extends Component {
           </div>
 
           {this.isAuth && (
-            <ul className="top-menu">
-              <li className="top-menu__profile">
-                <Link to="/dashboard/channel">
-                  <span className="userName">{login || ''}</span>
-                  <div className="userPhoto" style={{ 'backgroundImage': `url(${logo || ''})` }}></div>
-                </Link>
-              </li>
-            </ul>
+            <Dropdown login={login} logo={logo}>
+              <DropdownMenu login={login} />
+            </Dropdown>
           )}
         </header>
 

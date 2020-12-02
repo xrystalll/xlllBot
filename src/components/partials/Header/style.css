@@ -48,23 +48,14 @@
 
 .top-menu {
   list-style: none;
-  padding: 0;
-  float: right;
   margin-bottom: 0;
   margin-left: auto;
   z-index: 8;
 }
-.top-menu > li {
-  vertical-align: top;
+.top-menu__profile {
+  position: relative;
 }
-.top-menu > li > a {
-  color: var(--main-text-color);
-  display: flex;
-}
-.top-menu > li {
-  display: inline-block;
-}
-.top-menu__profile > a .userPhoto {
+.top-menu__profile .userPhoto {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -72,7 +63,7 @@
   background-repeat: no-repeat;
   background-color: var(--secondary-bg);
 }
-.top-menu__profile > a span {
+.top-menu__profile .userName {
   font-size: 14px;
   margin: 8px;
   color: var(--main-text-color);
