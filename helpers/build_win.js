@@ -6,7 +6,7 @@ const options = {
   "dir": "./",
   "icon": path.join(__dirname, '..', 'build', 'images', 'icon.ico'),
   "name": "xlllBot",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "app-copyright": "xrystalll",
   "out": "./releases",
   "asar": true,
@@ -17,7 +17,7 @@ const options = {
 
 const bundleElectronWindowsApp = async (options) => {
   const appPaths = await packager(options)
-  console.log(`Electron app bundles created:\n${appPaths.join("\n")}`)
+  console.log(`Electron app bundles created:\n${appPaths.join('\n')}`)
 }
 
 bundleElectronWindowsApp(options)

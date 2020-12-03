@@ -28,4 +28,5 @@ const Store = ({ children }) => {
   )
 };
 
-export { Store, StoreContext };
+export { StoreContext };
+export default Store;
