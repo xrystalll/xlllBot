@@ -73,7 +73,7 @@ class Events extends Component {
         <Card title={Strings.chatEventsByLast24Hrs[this.context.state.lang]} action={
           !noData && (
             <div className={`clear${clearVis}`} onClick={this.deleteEvents}>
-              <i className="material-icons">delete</i>
+              <i className="material-icons-outlined">delete</i>
               <span>{Strings.deleteAllEvents[this.context.state.lang]}</span>
             </div>
           )

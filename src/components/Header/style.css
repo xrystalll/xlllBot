@@ -30,7 +30,7 @@
   width: 240px;
   position: absolute;
   padding: 6px 14px;
-  z-index: 10;
+  z-index: 101;
 }
 #header .logo {
   transition: background .2s;
@@ -74,7 +74,7 @@
   left: 0;
   background: var(--secondary-tint);
   user-select: none;
-  z-index: 9;
+  z-index: 100;
 }
 .navigation__menu ul {
   list-style: none;
@@ -169,8 +169,11 @@
   .logo .logo__trigger:hover {
     color: var(--main-text-color);
   }
+  .app #navigation, .app #navigation.open {
+    padding-top: 88px !important;
+  }
   #navigation {
-    padding-top: 88px;
+    padding-top: 64px;
     position: fixed;
     top: 0;
     height: 100%;
@@ -181,7 +184,7 @@
   }
   #navigation.open {
     display: block;
-    padding-top: 88px;
-    transform: translate(0px, 0);
+    padding-top: 64px;
+    transform: translate(0);
   }
 }

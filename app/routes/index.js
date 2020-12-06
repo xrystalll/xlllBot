@@ -113,10 +113,28 @@ router.get('/api/bot/join', (req, res) => {
       client.join(channel)
         .then(joined => {
           ChannelsDB.updateOne({ name: channel }, { bot_active: true })
-            .then(() => {
-              pubsub.addTopic([{ topic: 'channel-points-channel-v1.' + data.twitchId, token: data.token }])
-                .catch(error => console.error(error))
-              res.json({ message: Strings.botJoined + ' ' + joined.join() })
+            .then(async () => {
+              const message = Strings.botJoined + ' ' + joined.join()
+              try {
+                await pubsub.addTopic([{ topic: 'channel-points-channel-v1.' + data.twitchId, token: data.token }])
+
+                res.json({
+                  message,
+                  pubSub: {
+                    success: true,
+                    message: 'connected to topic'
+                  }
+                })
+              } catch(error) {
+                res.json({
+                  message,
+                  pubSub: {
+                    success: false,
+                    message: error
+                  }
+                })
+                console.error(error)
+              }
             })
             .catch(error => res.status(500).json({ error }))
         })
@@ -398,19 +416,19 @@ router.get('/api/settings/all', (req, res) => {
                 sort: 13,
                 name: 'subgift',
                 state: true,
-                description: Strings.chanNotifyAboutGiftSub,
+                description: Strings.chatNotifyAboutGiftSub,
                 channel
               }, {
                 sort: 14,
                 name: 'giftpaidupgrade',
                 state: true,
-                description: Strings.chanNotifyAboutRenewalGiftSub,
+                description: Strings.chatNotifyAboutRenewalGiftSub,
                 channel
               }, {
                 sort: 15,
                 name: 'anongiftpaidupgrade',
                 state: true,
-                description: Strings.chanNotifyAboutRenewalAnonGiftSub,
+                description: Strings.chatNotifyAboutRenewalAnonGiftSub,
                 channel
               }, {
                 sort: 16,

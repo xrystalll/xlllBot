@@ -5,40 +5,6 @@ import CustomScrollbar from 'components/CustomScrollbar';
 import { CSSTransition } from 'react-transition-group';
 import '././style.css';
 
-const Dropdown = ({ login, logo, children }) => {
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    open && document.addEventListener('click', handleOutsideClick, false)
-    return () => {
-      document.removeEventListener('click', handleOutsideClick, false)
-    }
-  }, [open])
-
-  const openDropdown = () => {
-    setOpen(!open)
-  }
-
-  const handleOutsideClick = (e) => {
-    if (!e.target.closest('.dropdown')) {
-      setOpen(false)
-    }
-  }
-
-  return (
-    <ul className="top-menu">
-      <li className="top-menu__profile">
-        <div className="nav-item" onClick={openDropdown}>
-          <span className="userName">{login || ''}</span>
-          <div className="userPhoto" style={{ 'backgroundImage': `url(${logo || ''})` }} />
-        </div>
-
-        {open && children}
-      </li>
-    </ul>
-  )
-}
-
 const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightIcon, header, children }) => {
   const dropHeader = header ? ' drop-header' : ''
 
@@ -65,7 +31,7 @@ const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightI
   )
 }
 
-export const DropdownMenu = ({ login }) => {
+const DropdownMenu = ({ login }) => {
   const { state, dispatch } = useContext(StoreContext)
   const [activeMenu, setActiveMenu] = useState('main')
   const [menuHeight, setMenuHeight] = useState(null)
@@ -104,7 +70,7 @@ export const DropdownMenu = ({ login }) => {
             <DropdownItem
               leftIcon="account_circle"
               onClick={goTo}
-              data={{ url: 'https://twitch.tv/' + login}}
+              data={{ url: 'https://twitch.tv/' + login }}
             >
               <div className="menu-item-title">{Strings.openTwitchProfile[state.lang]}</div>
             </DropdownItem>
@@ -157,6 +123,40 @@ export const DropdownMenu = ({ login }) => {
 
       </CustomScrollbar>
     </div>
+  )
+}
+
+const Dropdown = ({ login, logo }) => {
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    open && document.addEventListener('click', handleOutsideClick, false)
+    return () => {
+      document.removeEventListener('click', handleOutsideClick, false)
+    }
+  }, [open])
+
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest('.dropdown')) {
+      setOpen(false)
+    }
+  }
+
+  const openDropdown = () => {
+    setOpen(!open)
+  }
+
+  return (
+    <ul className="top-menu">
+      <li className="top-menu__profile">
+        <div className="nav-item" onClick={openDropdown}>
+          <span className="userName">{login || ''}</span>
+          <div className="userPhoto" style={{ 'backgroundImage': `url(${logo || ''})` }} />
+        </div>
+
+        {open && <DropdownMenu login={login} />}
+      </li>
+    </ul>
   )
 }
 

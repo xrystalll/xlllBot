@@ -350,6 +350,10 @@ const Strings = {
   'english': {
     ru: 'Английский',
     en: 'English'
+  },
+  'channelPointsNotAvailableNeedToLogInAgain': {
+    'ru': 'Баллы канала недоступны. Необходимо заново авторизоваться',
+    'en': 'Channel points not available. Need to log in again'
   }
 }
 

@@ -22,7 +22,7 @@ export const BadwordItem = ({ data, deleteBadword }) => {
       <div className="channel_actions">
         <i
           onClick={deleteBadword.bind(this, data._id)}
-          className="item_delete badword_delete material-icons"
+          className="item_delete badword_delete material-icons-outlined"
           title={Strings.deleteDadword[state.lang]}
         >
           delete

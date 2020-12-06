@@ -4,6 +4,7 @@
 :root {
   --accent-color: #9147FF;
   --main-bg: #0e0e10;
+  --main-bg-darker: #070708;
   --main-text-color: #EFEFF1;
   --main-control-color: #3A3A3D;
   --main-control-pressed: #28282B;
@@ -1101,6 +1102,7 @@ i.item_cancel {
 }
 
 .vid-container.sticky {
+  background: var(--main-bg-darker);
   position: fixed;
   bottom: 16px;
   right: 16px;
@@ -1203,6 +1205,41 @@ ol#vid-list iframe {
 
 .videos_inner .content_loader {
   margin-bottom: 40px;
+}
+
+@media (min-width: 1400px) {
+  .view {
+    margin-bottom: -21px !important;
+  }
+  .content--boxed-sm.videoblock {
+    max-width: 1170px;
+  }
+  .vid-list-container,
+  .vid-container iframe,
+  .vid-container object,
+  .vid-container embed,
+  .vid-container .iframe,
+  .vid-container .content_loader,
+  .vid-container .empty-results {
+    height: 480px !important;
+  }
+}
+@media (min-width: 1600px) {
+  .content--boxed-sm.videoblock {
+    max-width: 1340px;
+  }
+  .vid-list-container,
+  .vid-container iframe,
+  .vid-container object,
+  .vid-container embed,
+  .vid-container .iframe,
+  .vid-container .content_loader,
+  .vid-container .empty-results {
+    height: 550px !important;
+  }
+  .vid-list-container {
+    min-width: 330px;
+  }
 }
 
 /* Other styles */
@@ -1335,7 +1372,7 @@ ol#vid-list iframe {
   align-items: center;
   justify-content: space-between;
   user-select: none;
-  z-index: 999;
+  z-index: 99;
   -webkit-app-region: drag;
 }
 .sys_bar .app_name {

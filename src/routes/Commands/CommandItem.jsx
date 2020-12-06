@@ -89,7 +89,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
             <i onClick={changeEditState} className="command_edit material-icons" title={Strings.editCommand[state.lang]}>create</i>
             <i
               onClick={deleteCommand.bind(this, data._id)}
-              className="item_delete command_delete material-icons"
+              className="item_delete command_delete material-icons-outlined"
               title={Strings.deleteCommand[state.lang]}
             >
               delete

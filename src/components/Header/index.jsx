@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import { getCookie } from 'support/Utils';
-import Dropdown, { DropdownMenu } from 'components/Dropdown';
+import Dropdown from 'components/Dropdown';
 import CustomScrollbar from 'components/CustomScrollbar';
 import '././style.css';
 
@@ -67,9 +67,7 @@ class Header extends Component {
           </div>
 
           {this.isAuth && (
-            <Dropdown login={login} logo={logo}>
-              <DropdownMenu login={login} />
-            </Dropdown>
+            <Dropdown login={login} logo={logo} />
           )}
         </header>
 

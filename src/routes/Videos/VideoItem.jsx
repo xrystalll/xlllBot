@@ -28,7 +28,7 @@ export const VideoItem = ({ index, playIndex, data, chooseVideo, deleteVideo }) 
           onClick={deleteVideo.bind(this, data._id)}
           title={Strings.removeVideoFromPlaylist[state.lang]}
         >
-          <i className="material-icons">delete</i>
+          <i className="material-icons-outlined">delete</i>
         </div>
       </div>
     </li>

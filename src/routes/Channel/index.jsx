@@ -94,6 +94,10 @@ const Channel = () => {
         if (!data.error) {
           setActive(true)
           toast.success(Strings.botSuccessfullyJoinedToChat[state.lang])
+
+          if (!data.pubSub.success) {
+            toast.error(Strings.channelPointsNotAvailableNeedToLogInAgain[state.lang])
+          }
         } else throw Error(data.error)
       })
       .catch(err => {
