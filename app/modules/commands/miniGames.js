@@ -14,20 +14,21 @@ const cockSize = (channel, userName, args) => {
     if (bool) {
       const targetUser = args[0] ? args[0].replace('@', '') : null
       const size = Math.floor(Math.random() * (26 - 8)) + 8
+      const sizeStr = declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])
 
       if (!targetUser) {
         if (size > 15) {
-          client.say(channel, `@${userName} ${Strings.wow} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.pogChamp}`)
+          client.say(channel, `@${userName} ${Strings.wow} ${size} ${sizeStr} ${Strings.pogChamp}`)
         } else {
-          client.say(channel, `@${userName} ${Strings.youHave} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])}. ${Strings.dontWorry} ${Strings.lul}`)
+          client.say(channel, `@${userName} ${Strings.youHave} ${size} ${sizeStr}. ${Strings.dontWorry} ${Strings.lul}`)
         }
       } else {
         if (targetUser === channel) return
 
         if (size > 15) {
-          client.say(channel, `${targetUser} ${Strings.has} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.pogChamp}`)
+          client.say(channel, `${targetUser} ${Strings.has} ${size} ${sizeStr} ${Strings.pogChamp}`)
         } else {
-          client.say(channel, `${targetUser}} ${Strings.has} ${size} ${declOfNum(size, [Strings.centimeter, Strings.centimeters, Strings.manyCentimeters])} ${Strings.lul}`)
+          client.say(channel, `${targetUser} ${Strings.has} ${size} ${sizeStr} ${Strings.lul}`)
         }
       }
     }

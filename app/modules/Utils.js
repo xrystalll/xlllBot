@@ -20,7 +20,7 @@ const twitchApi = (channel, method, api, params = null) => new Promise((resolve,
       url,
       headers: {
         Authorization: 'Bearer ' + token,
-        'Client-ID': config.bot.client_id
+        'Client-ID': config.auth.client_id
       }
     }
 

@@ -297,7 +297,7 @@ OAuth2Strategy.prototype.userProfile = (accessToken, next) => {
     url: 'https://api.twitch.tv/helix/users',
     headers: {
       Authorization: 'Bearer ' + accessToken,
-      'Client-ID': config.bot.client_id,
+      'Client-ID': config.auth.client_id,
       Accept: 'application/vnd.twitchtv.v5+json'
     }
   }, (err, res, data) => {
@@ -312,9 +312,9 @@ OAuth2Strategy.prototype.userProfile = (accessToken, next) => {
 passport.use('twitch', new OAuth2Strategy({
   authorizationURL: 'https://id.twitch.tv/oauth2/authorize',
   tokenURL: 'https://id.twitch.tv/oauth2/token',
-  clientID: config.bot.client_id,
+  clientID: config.auth.client_id,
   clientSecret: config.auth.secret,
-  callbackURL: config.auth.callback_url,
+  callbackURL: config.auth.callback_host + config.auth.callback_url,
   scope: ['user:read:email', 'channel:read:redemptions', 'user:edit:broadcast'],
   state: true
 }, (accessToken, refreshToken, profile, next) => {
