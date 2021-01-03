@@ -46,6 +46,12 @@ const Reducer = (state, action) => {
         ...state,
         lang: action.payload
       }
+    case 'SET_ADMIN':
+      localStorage.setItem('admin', action.payload)
+      return {
+        ...state,
+        admin: action.payload
+      }
     default:
       return state;
   }

@@ -118,6 +118,14 @@ class Header extends Component {
                       {Strings.settings[this.context.state.lang]}
                     </NavLink>
                   </li>
+                  {this.context.state.admin && (
+                    <li>
+                      <NavLink to="/admin" onClick={this.closeMenu}>
+                        <i className="nav-ic">admin_panel_settings</i>
+                        {Strings.adminPanel[this.context.state.lang]}
+                      </NavLink>
+                    </li>
+                  )}
                 </React.Fragment>
               )}
               <li>

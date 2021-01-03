@@ -57,6 +57,7 @@ export const getCookie = (key) => {
 }
 
 export const clearCookies = () => {
+  localStorage.removeItem('admin')
   document.cookie.split(';').map(cookie => {
     document.cookie = cookie.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
     return true

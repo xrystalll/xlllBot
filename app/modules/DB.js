@@ -5,7 +5,7 @@ const Mongoose = require('mongoose')
 const cachegoose = require('cachegoose')
 
 const ChannelsDB = require(path.join(__dirname, 'models', 'ChannelsDB'))
- 
+
 cachegoose(Mongoose)
 
 Mongoose.connect(config.mongoremote, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })

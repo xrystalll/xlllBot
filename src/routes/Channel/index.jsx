@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 const Channel = () => {
   const history = useHistory()
 
-  const { state } = useContext(StoreContext)
+  const { state, dispatch } = useContext(StoreContext)
   const [init, setInit] = useState(true)
   const [channel, setChannel] = useState('')
   const [isModerator, setModerator] = useState(true)
@@ -23,6 +23,27 @@ const Channel = () => {
 
   useEffect(() => {
     document.title = 'xlllBot - ' + Strings.channel[state.lang]
+    const fetchUser = async () => {
+      try {
+        const data = await fetch(apiEndPoint + '/api/user', {
+          headers: {
+            Authorization: 'Basic ' + btoa(getCookie('login') + ':' + getCookie('token'))
+          }
+        })
+        if (data.status === 401) {
+          clearCookies()
+          toast.error(Strings.youAreNotAuthorized[state.lang])
+          history.push('/')
+          return
+        }
+        const user = await data.json()
+
+        user.admin && dispatch({ type: 'SET_ADMIN', payload: !!user.admin })
+        setInit(false)
+      } catch(e) {
+        console.error(e)
+      }
+    }
     const fetchChannel = async () => {
       try {
         const data = await fetch(apiEndPoint + '/api/channel', {
@@ -73,10 +94,11 @@ const Channel = () => {
     }
 
     if (init) {
+      fetchUser()
       fetchChannel()
       fetchModerators()
     }
-  }, [history, state.lang, init])
+  }, [history, state.lang, dispatch, init])
 
   const changeActive = (e) => {
     const bool = e.currentTarget.checked

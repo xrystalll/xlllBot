@@ -18,5 +18,6 @@
     "callback_url": "/auth/twitch/callback"
   },
   "mongoremote": "mongodb+srv://",
-  "clientEndPoint": "http://localhost:1337"
+  "clientEndPoint": "http://localhost:1337",
+  "adminUsername": ""
 }

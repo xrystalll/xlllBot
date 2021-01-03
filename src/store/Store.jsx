@@ -12,7 +12,8 @@ const initialState = {
   time: 0,
   noData: false,
   mini: false,
-  lang
+  lang,
+  admin: localStorage.getItem('admin') || false
 }
 
 const StoreContext = createContext(initialState)

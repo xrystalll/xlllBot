@@ -1,0 +1,25 @@
+/* Admin */
+.admin__nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(264px, 1fr));
+  grid-gap: 8px;
+  margin-right: 8px;
+}
+.admin__nav_item {
+  background-color: var(--secondary-tint);
+  color: var(--main-text-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  transition: ease .2s;
+}
+.admin__nav_item:hover {
+  background-color: var(--main-control-pressed);
+}
+@media (max-width: 400px) {
+  .admin__nav {
+    grid-template-columns: auto;
+  }
+}

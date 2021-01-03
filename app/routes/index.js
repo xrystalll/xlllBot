@@ -48,7 +48,8 @@ router.get('/api/user', (req, res) => {
       res.json({
         twitchId: data.twitchId,
         login: data.login,
-        logo: data.logo
+        logo: data.logo,
+        admin: data.admin
       })
     })
     .catch(error => res.status(401).json({ error: Strings.accessDenied }))
@@ -99,7 +100,7 @@ router.get('/api/channel/mods', (req, res) => {
 }),
 
 
-// bot
+// bot api
 // join bot to chat
 router.get('/api/bot/join', (req, res) => {
   AuthProtect(req, res)
@@ -258,6 +259,7 @@ router.put('/api/commands/delete', (req, res) => {
 
 
 // badWords api
+// get all badWords
 router.get('/api/words/all', (req, res) => {
   AuthProtect(req, res)
     .then(data => {
@@ -648,15 +650,75 @@ router.get('/api/games', (req, res) => {
 }),
 
 
-// invite api
-router.get('/api/invite/add', (req, res) => {
-  const { channel } = req.query
+// admin channels api
+// get all channels
+router.get('/api/admin/channels/all', (req, res) => {
+  AuthProtect(req, res)
+    .then(data => {
+      if (!data && data.login !== config.adminUsername) throw Error
 
-  if (!channel) return res.status(400).json({ error: Strings.emptyRequest })
+      ChannelsDB.find()
+        .cache(0, 'cache-all-channels-for-admin')
+        .then(data => res.json(data))
+        .catch(error => res.status(500).json({ error: Strings.unableGetAllChannels }))
+    })
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
+}),
 
-  InvitesDB.findOrCreate({ channel })
-    .then(data => res.json(data))
-    .catch(error => res.status(500).json({ error: Strings.unableCreateInvite }))
+
+// admin invites api
+// get all invites
+router.get('/api/admin/invite/all', (req, res) => {
+  AuthProtect(req, res)
+    .then(data => {
+      if (!data && data.login !== config.adminUsername) throw Error
+
+      InvitesDB.find()
+        .cache(0, 'cache-all-invites-for-admin')
+        .then(data => res.json(data))
+        .catch(error => res.status(500).json({ error: Strings.unableGetAllInvites }))
+    })
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
+}),
+
+// add new invite
+router.put('/api/admin/invite/add', (req, res) => {
+  AuthProtect(req, res)
+    .then(data => {
+      if (!data && data.login !== config.adminUsername) throw Error
+
+      const { channel } = req.body
+
+      if (!channel) return res.status(400).json({ error: Strings.emptyRequest })
+
+      InvitesDB.findOrCreate({ channel })
+        .then(data => {
+          cachegoose.clearCache('cache-all-invites-for-admin')
+          res.json(data)
+        })
+        .catch(error => res.status(500).json({ error: Strings.unableCreateInvite }))
+    })
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
+}),
+
+// delete invite
+router.put('/api/admin/invite/delete', (req, res) => {
+  AuthProtect(req, res)
+    .then(data => {
+      if (!data && data.login !== config.adminUsername) throw Error
+
+      const { id } = req.body
+
+      if (!id) return res.status(400).json({ error: Strings.emptyRequest })
+
+      InvitesDB.deleteOne({ _id: Mongoose.Types.ObjectId(id) })
+        .then(data => {
+          cachegoose.clearCache('cache-all-invites-for-admin')
+          res.json(data)
+        })
+        .catch(error => res.status(500).json({ error: Strings.unableDeleteInvite }))
+    })
+    .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
 

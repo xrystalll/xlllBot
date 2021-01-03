@@ -22,6 +22,9 @@ const UserSchema = new Schema({
   },
   logo: {
     type: String
+  },
+  admin: {
+    type: Boolean
   }
 })
 UserSchema.plugin(findOrCreate)

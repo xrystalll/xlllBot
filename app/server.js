@@ -5,7 +5,11 @@ const Strings = require(path.join(__dirname, 'config', 'strings.json'))
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
-const io = require('socket.io').listen(server)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: config.clientEndPoint,
+  }
+})
 const port = process.env.PORT || 1337
 
 const routes = require(path.join(__dirname, 'routes'))
@@ -327,10 +331,10 @@ passport.use('twitch', new OAuth2Strategy({
 
   InvitesDB.findOne({ channel })
     .then(res => {
-      if (res && res.channel === data.login) {
+      if (res && res.channel === channel) {
         UserDB.findOrCreate({
           twitchId: data.id,
-          login: data.login
+          login: channel
         })
         return next(null, profile)
       } else {
@@ -360,8 +364,9 @@ app.get(config.auth.callback_url, passport.authenticate('twitch', { failureRedir
   const token = req.session.passport.user.accessToken
   const hash = crypto.createHash('md5').update(req.session.passport.user.refreshToken + 'is' + req.session.passport.user.data[0].login).digest('hex')
   const logo = req.session.passport.user.data[0].profile_image_url
+  const admin = req.session.passport.user.data[0].login === config.adminUsername
 
-  UserDB.updateOne({ twitchId: id }, { token, hash, logo })
+  UserDB.updateOne({ twitchId: id }, { token, hash, logo, admin })
     .then(() => {
       UserDB.find({ twitchId: id })
         .then(data => {

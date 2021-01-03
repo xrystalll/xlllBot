@@ -15,6 +15,7 @@ import Videos from 'routes/Videos';
 import YouTubePlayer from 'routes/Videos/YoutubePlayer';
 import Events from 'routes/Events';
 import Settings from 'routes/Settings';
+import Admin from 'routes/Admin';
 import AllCommands from 'routes/Allcommands';
 import { Auth } from 'routes/Auth';
 import { AuthError } from 'routes/Auth/Error';
@@ -72,6 +73,7 @@ class App extends Component {
               <PrivateRoute path="/dashboard/videos" component={Videos} />
               <PrivateRoute path="/dashboard/events" component={Events} />
               <PrivateRoute path="/dashboard/settings" component={Settings} />
+              <PrivateRoute path="/admin" component={Admin} />
               <GeneralRoute path="/commands" component={AllCommands} />
               <Route path="/auth" exact component={Auth} />
               <Route path="/auth/error" component={AuthError} />

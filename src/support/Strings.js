@@ -354,6 +354,66 @@ const Strings = {
   'channelPointsNotAvailableNeedToLogInAgain': {
     'ru': 'Баллы канала недоступны. Необходимо заново авторизоваться',
     'en': 'Channel points not available. Need to log in again'
+  },
+  'adminPanel': {
+    ru: 'Панель админа',
+    en: 'Admin dashboard'
+  },
+  'allChannels': {
+    ru: 'Все каналы',
+    en: 'All channels'
+  },
+  'channelsList': {
+    ru: 'Список каналов',
+    en: 'Channels list'
+  },
+  'noChannelsYet': {
+    ru: 'Пока что нет каналов',
+    en: 'No channels yet'
+  },
+  'invites': {
+    ru: 'Приглашения',
+    en: 'Invites'
+  },
+  'deleteInvite': {
+    ru: 'Удалить пиглашение',
+    en: 'Delete invite'
+  },
+  'enterChannelName': {
+    ru: 'Введите название канала',
+    en: 'Enter channel name'
+  },
+  'cancelNewInvite': {
+    ru: 'Отменить сознание нового приглашения',
+    en: 'Cancel new invite'
+  },
+  'inviteSuccessfullyDeleted': {
+    ru: 'Приглашение успешно удалено',
+    en: 'Invite successfully deleted'
+  },
+  'failedToDeleteInvite': {
+    ru: 'Не удалось удалить приглашение',
+    en: 'Failed to delete invite'
+  },
+  'inviteSuccessfullyAdded': {
+    ru: 'Приглашение успешно добавлено',
+    en: 'Invite successfully added'
+  },
+  'failedToAddingInvite': {
+    ru: 'Не удалось добавить приглашение',
+    en: 'Failed to adding invite'
+  },
+  'invitesList': {
+    ru: 'Список приглашений',
+    en: 'Invites list'
+  },
+  'addNewInvite': {
+    ru: 'Добавить новое приглашение',
+    en: 'Add new invite'
+  },
+  'noInvitesYet': {
+    ru: 'Пока что нет приглашений',
+    en: 'No invites yet'
   }
 }
 
