@@ -8,7 +8,7 @@ export const InviteItem = ({ data, deleteInvite }) => {
   return (
     <div className="command_form">
       <input
-        className="input_text badword_name"
+        className="input_text"
         type="text"
         placeholder={Strings.channel[state.lang]}
         defaultValue={data.channel}
@@ -16,7 +16,7 @@ export const InviteItem = ({ data, deleteInvite }) => {
       <div className="channel_actions">
         <i
           onClick={deleteInvite.bind(this, data._id)}
-          className="item_delete badword_delete material-icons-outlined"
+          className="item_delete material-icons-outlined"
           title={Strings.deleteInvite[state.lang]}
         >
           delete

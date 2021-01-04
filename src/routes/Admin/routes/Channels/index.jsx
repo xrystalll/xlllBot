@@ -59,7 +59,7 @@ const Channels = () => {
   }, [history, state.lang, state.admin, init])
 
   return (
-    <Layout title={Strings.allChannels[state.lang]} subTitle={Strings.adminPanel[state.lang]}>
+    <Layout title={Strings.allChannels[state.lang]} subTitle={Strings.adminPanel[state.lang]} back="/admin">
       <Card title={Strings.channelsList[state.lang]}>
         {items.length > 0 ? (
           items.map(item => (

@@ -53,7 +53,7 @@ export const NewCommandItem = ({ addCommand, toggleAdd }) => {
         placeholder={Strings.command[state.lang]}
       />
       <input
-        className={'input_text command_text active' + errorTwo}
+        className={'input_text active' + errorTwo}
         type="text"
         name="text"
         onChange={handleChange}
@@ -68,7 +68,7 @@ export const NewCommandItem = ({ addCommand, toggleAdd }) => {
         defaultValue={values.countdown}
       />
       <div className="command_actions">
-        <i onClick={toggleAdd} className="item_cancel command_new_cancel material-icons" title={Strings.cancelNewCommand[state.lang]}>close</i>
+        <i onClick={toggleAdd} className="item_cancel material-icons" title={Strings.cancelNewCommand[state.lang]}>close</i>
         <input className="btn" type="submit" value={Strings.add[state.lang]} />
       </div>
     </form>

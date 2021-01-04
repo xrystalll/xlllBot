@@ -68,7 +68,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
         defaultValue={data.tag}
       />
       <input
-        className={'input_text command_text' + active + errorTwo}
+        className={'input_text' + active + errorTwo}
         type="text"
         name="text"
         onChange={handleChange}
@@ -89,7 +89,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
             <i onClick={changeEditState} className="command_edit material-icons" title={Strings.editCommand[state.lang]}>create</i>
             <i
               onClick={deleteCommand.bind(this, data._id)}
-              className="item_delete command_delete material-icons-outlined"
+              className="item_delete material-icons-outlined"
               title={Strings.deleteCommand[state.lang]}
             >
               delete
@@ -99,7 +99,7 @@ export const CommandItem = ({ data, editCommand, deleteCommand }) => {
           <div className="action_block">
             <i
               onClick={changeEditState}
-              className="item_cancel command_edit_cancel material-icons"
+              className="item_cancel material-icons"
               title={Strings.cancelChanges[state.lang]}
             >
               close

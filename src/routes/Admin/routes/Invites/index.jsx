@@ -110,7 +110,7 @@ const Invites = () => {
   }
 
   return (
-    <Layout title={Strings.invites[state.lang]} subTitle={Strings.adminPanel[state.lang]}>
+    <Layout title={Strings.invites[state.lang]} subTitle={Strings.adminPanel[state.lang]} back="/admin">
       <Card title={Strings.invitesList[state.lang]} action={
         <Fab icon={showAdd ? 'close' : 'add'} title={Strings.addNewInvite[state.lang]} onClick={toggleAdd} />
       }>

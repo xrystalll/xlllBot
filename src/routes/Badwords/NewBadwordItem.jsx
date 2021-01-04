@@ -35,7 +35,7 @@ export const NewBadwordItem = ({ addBadword, toggleAdd }) => {
   return (
     <form className="command_form" onSubmit={submit.bind(this)}>
       <input
-        className={'input_text badword_name active' + errorOne}
+        className={'input_text active' + errorOne}
         type="text"
         name="word"
         onChange={handleChange}
@@ -50,7 +50,7 @@ export const NewBadwordItem = ({ addBadword, toggleAdd }) => {
         defaultValue={values.duration}
       />
       <div className="channel_actions">
-        <i onClick={toggleAdd} className="item_cancel badword_new_cancel material-icons" title={Strings.cancelNewBadword[state.lang]}>close</i>
+        <i onClick={toggleAdd} className="item_cancel material-icons" title={Strings.cancelNewBadword[state.lang]}>close</i>
         <input className="btn" type="submit" value={Strings.add[state.lang]} />
       </div>
     </form>

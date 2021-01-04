@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
+import './style.css';
 
 export const ChannelItem = ({ data }) => {
   const { state } = useContext(StoreContext)
@@ -8,11 +9,15 @@ export const ChannelItem = ({ data }) => {
   return (
     <div className="command_form">
       <input
-        className="input_text badword_name"
+        className="input_text"
         type="text"
         placeholder={Strings.channel[state.lang]}
         defaultValue={data.name}
       />
+      {data.bot_active
+        ? <div className={'channel_bot on'}>bot active</div>
+        : <div className={'channel_bot'}>bot disabled</div>
+      }
     </div>
   )
 }

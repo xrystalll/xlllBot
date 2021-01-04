@@ -85,6 +85,19 @@
   line-height: 140%;
   font-size: 14px;
 }
+.content__header .back a {
+  color: var(--secondary-color);
+  display: flex;
+  width: max-content;
+  transition: color .2s ease-in;
+}
+.content__header .back a:hover {
+  color: var(--selection-color);
+}
+.content__header .back i {
+  font-size: 18px;
+  margin-right: 8px;
+}
 
 @media screen and (min-width: 768px) {
   .content__header {

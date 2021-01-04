@@ -1,0 +1,11 @@
+/* ChannelItem */
+.channel_bot {
+  color: var(--main-danger-color);
+  font-size: 13px;
+  white-space: nowrap;
+  margin-right: 8px;
+  user-select: none;
+}
+.channel_bot.on {
+  color: var(--main-success-color);
+}

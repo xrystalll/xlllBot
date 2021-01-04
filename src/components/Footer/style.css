@@ -22,7 +22,7 @@
 }
 #footer .footer__menu > li > a {
   color: var(--secondary-color);
-  transition: all .1s ease-in;
+  transition: color .1s ease-in;
 }
 #footer .footer__menu > li > a:hover, #footer .footer__menu > li > a:focus {
   color: var(--main-text-color);

@@ -28,14 +28,14 @@ export const NewInviteItem = ({ addInvite, toggleAdd }) => {
   return (
     <form className="command_form" onSubmit={submit.bind(this)}>
       <input
-        className={'input_text badword_name active' + error}
+        className={'input_text active' + error}
         type="text"
         name="channel"
         onChange={handleChange}
         placeholder={Strings.channel[state.lang]}
       />
       <div className="channel_actions">
-        <i onClick={toggleAdd} className="item_cancel badword_new_cancel material-icons" title={Strings.cancelNewInvite[state.lang]}>close</i>
+        <i onClick={toggleAdd} className="item_cancel material-icons" title={Strings.cancelNewInvite[state.lang]}>close</i>
         <input className="btn" type="submit" value={Strings.add[state.lang]} />
       </div>
     </form>

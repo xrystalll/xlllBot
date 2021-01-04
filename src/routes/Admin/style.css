@@ -13,7 +13,8 @@
   align-items: center;
   justify-content: center;
   height: 150px;
-  transition: ease .2s;
+  transition: background .2s ease-in;
+  user-select: none;
 }
 .admin__nav_item:hover {
   background-color: var(--main-control-pressed);

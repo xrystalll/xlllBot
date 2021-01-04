@@ -8,7 +8,7 @@ export const BadwordItem = ({ data, deleteBadword }) => {
   return (
     <div className="command_form">
       <input
-        className="input_text badword_name"
+        className="input_text"
         type="text"
         placeholder={Strings.badword[state.lang]}
         defaultValue={data.word}
@@ -22,7 +22,7 @@ export const BadwordItem = ({ data, deleteBadword }) => {
       <div className="channel_actions">
         <i
           onClick={deleteBadword.bind(this, data._id)}
-          className="item_delete badword_delete material-icons-outlined"
+          className="item_delete material-icons-outlined"
           title={Strings.deleteDadword[state.lang]}
         >
           delete

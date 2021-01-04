@@ -658,7 +658,6 @@ router.get('/api/admin/channels/all', (req, res) => {
       if (!data && data.login !== config.adminUsername) throw Error
 
       ChannelsDB.find()
-        .cache(0, 'cache-all-channels-for-admin')
         .then(data => res.json(data))
         .catch(error => res.status(500).json({ error: Strings.unableGetAllChannels }))
     })
@@ -720,6 +719,7 @@ router.put('/api/admin/invite/delete', (req, res) => {
     })
     .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
+
 
 // remove this after use
 router.get('/api/invite/add', (req, res) => {
