@@ -44,6 +44,6 @@
 - Specify the name of your Twitch bot in `src/config.js`
 - Build the build react application with the command `npm run react:build`
 - Build an application under OS Windows with the command `npm run build:win` or run it in development mode `npm start`
-- Add the channel on which the bot will work to the database by url in the browser - `http://localhost:1337/api/invite/add?channel=CHANNEL NAME`
+- Add the channel on which the bot will work to the database by url in the browser - `http://localhost:1337/api/invite/add?channel=CHANNEL NAME` (Delete line 724-737 in file `app/routes/index.js` after adding your channel)
 - Run the created application from the `releases` folder
 - Activate by clicking on the bot status switch on the main page of the control panel. The bot will connect to the chat (when the application is closed, the bot turns off)

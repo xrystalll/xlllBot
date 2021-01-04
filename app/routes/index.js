@@ -721,6 +721,20 @@ router.put('/api/admin/invite/delete', (req, res) => {
     .catch(error => res.status(401).json({ error: Strings.accessDenied }))
 }),
 
+// remove this after use
+router.get('/api/invite/add', (req, res) => {
+  const { channel } = req.query
+
+  if (!channel) return res.status(400).json({ error: Strings.emptyRequest })
+
+  InvitesDB.findOrCreate({ channel })
+    .then(data => {
+      cachegoose.clearCache('cache-all-invites-for-admin')
+      res.json(data)
+    })
+    .catch(error => res.status(500).json({ error: Strings.unableCreateInvite }))
+})
+////////////////////////////////////////////////////
 
 // error 404
 router.get('*', (req, res) => {
