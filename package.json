@@ -1,7 +1,7 @@
 {
   "homepage": "./",
   "name": "xlllbot",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": true,
   "description": "Electron + React Node.js Twitch chat bot app by xrystalll",
   "author": "xrystalll",

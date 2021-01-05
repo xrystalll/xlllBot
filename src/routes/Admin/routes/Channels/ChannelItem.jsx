@@ -15,8 +15,8 @@ export const ChannelItem = ({ data }) => {
         defaultValue={data.name}
       />
       {data.bot_active
-        ? <div className={'channel_bot on'}>bot active</div>
-        : <div className={'channel_bot'}>bot disabled</div>
+        ? <div className={'channel_bot on'}>{Strings.botActive[state.lang]}</div>
+        : <div className={'channel_bot'}>{Strings.botDisabled[state.lang]}</div>
       }
     </div>
   )

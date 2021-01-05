@@ -8,18 +8,13 @@ import PrivateRoute from 'components/Route/PrivateRoute';
 import GeneralRoute from 'components/Route/GeneralRoute';
 import SysBar from 'components/SysBar';
 import Home from 'routes/Home';
-import Channel from 'routes/Channel';
-import Commands from 'routes/Commands';
-import Badwords from 'routes/Badwords';
-import Videos from 'routes/Videos';
-import YouTubePlayer from 'routes/Videos/YoutubePlayer';
-import Events from 'routes/Events';
-import Settings from 'routes/Settings';
+import Dashboard from 'routes/Dashboard';
 import Admin from 'routes/Admin';
 import AllCommands from 'routes/Allcommands';
 import { Auth } from 'routes/Auth';
 import { AuthError } from 'routes/Auth/Error';
 import { NotFound } from 'routes/Error';
+import YouTubePlayer from 'components/YoutubePlayer';
 import { ToastContainer, toast } from 'react-toastify';
 
 class App extends Component {
@@ -67,12 +62,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path="/" exact component={Home} />
-              <PrivateRoute path="/dashboard/channel" component={Channel} />
-              <PrivateRoute path="/dashboard/commands" component={Commands} />
-              <PrivateRoute path="/dashboard/badwords" component={Badwords} />
-              <PrivateRoute path="/dashboard/videos" component={Videos} />
-              <PrivateRoute path="/dashboard/events" component={Events} />
-              <PrivateRoute path="/dashboard/settings" component={Settings} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/admin" component={Admin} />
               <GeneralRoute path="/commands" component={AllCommands} />
               <Route path="/auth" exact component={Auth} />

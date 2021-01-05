@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, Switch, Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { NavLink, Redirect, Switch, Route, useHistory, useRouteMatch } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import Layout from 'components/Layout';
@@ -14,6 +14,8 @@ const Admin = () => {
   const { state } = useContext(StoreContext)
   const { path } = useRouteMatch()
 
+  document.title = 'xlllBot - ' + Strings.adminPanel[state.lang]
+
   if (!state.admin) {
     history.push('/')
   }
@@ -22,7 +24,7 @@ const Admin = () => {
     <Switch>
       <Route path={path + '/channels'} component={Channels} />
       <Route path={path + '/invites'} component={Invites} />
-      <Route exact path={path}>
+      <Route path={path} exact>
         <Layout title={Strings.dashboard[state.lang]} subTitle={Strings.adminPanel[state.lang]}>
           <Card>
             <div className="admin__nav">
@@ -31,6 +33,9 @@ const Admin = () => {
             </div>
           </Card>
         </Layout>
+      </Route>
+      <Route>
+        <Redirect to={{ pathname: path }} />
       </Route>
     </Switch>
   )

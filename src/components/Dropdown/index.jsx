@@ -4,6 +4,7 @@ import Strings from 'support/Strings';
 import CustomScrollbar from 'components/CustomScrollbar';
 import { CSSTransition } from 'react-transition-group';
 import '././style.css';
+import UserImage from './user.png';
 
 const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightIcon, header, children }) => {
   const dropHeader = header ? ' drop-header' : ''
@@ -31,7 +32,7 @@ const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightI
   )
 }
 
-const DropdownMenu = ({ login }) => {
+const DropdownMenu = ({ login, isAuth }) => {
   const { state, dispatch } = useContext(StoreContext)
   const [activeMenu, setActiveMenu] = useState('main')
   const [menuHeight, setMenuHeight] = useState(null)
@@ -67,13 +68,15 @@ const DropdownMenu = ({ login }) => {
           onEnter={calcHeight}
         >
           <div className="menu">
-            <DropdownItem
-              leftIcon="account_circle"
-              onClick={goTo}
-              data={{ url: 'https://twitch.tv/' + login }}
-            >
-              <div className="menu-item-title">{Strings.openTwitchProfile[state.lang]}</div>
-            </DropdownItem>
+            {isAuth && (
+              <DropdownItem
+                leftIcon="account_circle"
+                onClick={goTo}
+                data={{ url: 'https://twitch.tv/' + login }}
+              >
+                <div className="menu-item-title">{Strings.openTwitchProfile[state.lang]}</div>
+              </DropdownItem>
+            )}
             <DropdownItem
               leftIcon="language"
               rightIcon="chevron_right"
@@ -126,7 +129,7 @@ const DropdownMenu = ({ login }) => {
   )
 }
 
-const Dropdown = ({ login, logo }) => {
+const Dropdown = ({ login, logo, isAuth }) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -150,11 +153,11 @@ const Dropdown = ({ login, logo }) => {
     <ul className="top-menu">
       <li className="top-menu__profile">
         <div className="nav-item" onClick={openDropdown}>
-          <span className="userName">{login || ''}</span>
-          <div className="userPhoto" style={{ 'backgroundImage': `url(${logo || ''})` }} />
+          {isAuth && <span className="userName">{login || ''}</span>}
+          <div className="userPhoto" style={{ 'backgroundImage': `url(${logo ? decodeURIComponent(logo) : UserImage})` }} />
         </div>
 
-        {open && <DropdownMenu login={login} />}
+        {open && <DropdownMenu login={login} isAuth={isAuth} />}
       </li>
     </ul>
   )

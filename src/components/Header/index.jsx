@@ -16,7 +16,7 @@ class Header extends Component {
     this.state = {
       showMenu: false,
       login: getCookie('login'),
-      logo: decodeURIComponent(getCookie('logo'))
+      logo: getCookie('logo')
     }
     this.toggleMenu = this.toggleMenu.bind(this)
     this.closeMenu = this.closeMenu.bind(this)
@@ -66,9 +66,7 @@ class Header extends Component {
             <h1>xlllBot</h1>
           </div>
 
-          {this.isAuth && (
-            <Dropdown login={login} logo={logo} />
-          )}
+          <Dropdown isAuth={this.isAuth} login={login} logo={logo} />
         </header>
 
         <nav id="navigation" className={menuVis}>

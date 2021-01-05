@@ -414,6 +414,14 @@ const Strings = {
   'noInvitesYet': {
     ru: 'Пока что нет приглашений',
     en: 'No invites yet'
+  },
+  'botActive': {
+    ru: 'бот активен',
+    en: 'bot active'
+  },
+  'botDisabled': {
+    ru: 'бот выключен',
+    en: 'bot disabled'
   }
 }
 
