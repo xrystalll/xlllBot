@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
-import { getCookie, clearCookies } from 'support/Utils';
-import '././style.css';
+import { getCookie } from 'support/Utils';
+import './style.css';
 
 const Footer = () => {
   const { state } = useContext(StoreContext)
   const isAuth = !!getCookie('login') && !!getCookie('token')
-
-  const logout = () => {
-    clearCookies()
-  }
 
   return (
     <footer id="footer">
@@ -31,9 +27,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/dashboard/settings">{Strings.settings[state.lang]}</Link>
-              </li>
-              <li>
-                <Link to="/" onClick={logout}>{Strings.logOut[state.lang]}</Link>
               </li>
           </ul>
         )}

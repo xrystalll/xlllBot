@@ -403,6 +403,10 @@ const Strings = {
     ru: 'Не удалось добавить приглашение',
     en: 'Failed to adding invite'
   },
+  'inviteForThisChannelAlreadyCreated': {
+    ru: 'Приглашение для этого канала уже создано',
+    en: 'Invite for this channel already created'
+  },
   'invitesList': {
     ru: 'Список приглашений',
     en: 'Invites list'

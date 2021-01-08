@@ -1,10 +1,9 @@
-import React from 'react';
-import '././style.css';
+import './style.css';
 
 const Switch = ({ checked, onChange, children }) => {
   return (
     <label className="switch">
-      <input type="checkbox" onChange={onChange.bind(this)} checked={checked} />
+      <input type="checkbox" onChange={onChange} checked={checked} />
       <span>
         {children}
       </span>

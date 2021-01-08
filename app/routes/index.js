@@ -713,7 +713,7 @@ router.put('/api/admin/invite/delete', (req, res) => {
       InvitesDB.deleteOne({ _id: Mongoose.Types.ObjectId(id) })
         .then(data => {
           cachegoose.clearCache('cache-all-invites-for-admin')
-          res.json(data)
+          res.json({ success: true, deletedCount: data.deletedCount })
         })
         .catch(error => res.status(500).json({ error: Strings.unableDeleteInvite }))
     })

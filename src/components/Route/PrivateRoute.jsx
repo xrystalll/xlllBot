@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
@@ -26,13 +26,13 @@ class PrivateRoute extends Component {
         {...rest}
         render = {props =>
           this.isAuth ? (
-            <React.Fragment>
+            <Fragment>
               <Header />
               <Component {...props} />
               <Footer />
-            </React.Fragment>
+            </Fragment>
           ) : (
-            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+            <Redirect to="/" />
           )
         }
       />

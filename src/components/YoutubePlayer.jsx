@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import { getCookie } from 'support/Utils';
@@ -12,7 +12,7 @@ let player
 class YouTubePlayer extends Component {
   static contextType = StoreContext;
   _isMounted = false;
-  ownClose = false
+  ownClose = false;
   constructor() {
     super();
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -11,11 +11,11 @@ class GeneralRoute extends Component {
       <Route
         {...rest}
         render = {props => (
-          <React.Fragment>
+          <Fragment>
             <Header />
             <Component {...props} />
             <Footer />
-          </React.Fragment>
+          </Fragment>
         )}
       />
     )

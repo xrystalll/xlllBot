@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { apiEndPoint } from 'config';
 import { StoreContext } from 'store/Store';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { apiEndPoint } from 'config';
 import { StoreContext } from 'store/Store';
@@ -100,6 +100,7 @@ const Invites = () => {
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
+          if (!data.created) throw Error(Strings.inviteForThisChannelAlreadyCreated[state.lang])
           setNoData(false)
           setItems([data.doc, ...items])
           toggleAdd()

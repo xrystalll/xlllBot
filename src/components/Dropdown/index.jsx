@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
+import { clearCookies } from 'support/Utils';
 import CustomScrollbar from 'components/CustomScrollbar';
 import { CSSTransition } from 'react-transition-group';
-import '././style.css';
+import './style.css';
 import UserImage from './user.png';
 
 const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightIcon, header, children }) => {
@@ -33,6 +35,8 @@ const DropdownItem = ({ onClick, data, setActiveMenu, goToMenu, leftIcon, rightI
 }
 
 const DropdownMenu = ({ login, isAuth }) => {
+  const history = useHistory()
+
   const { state, dispatch } = useContext(StoreContext)
   const [activeMenu, setActiveMenu] = useState('main')
   const [menuHeight, setMenuHeight] = useState(null)
@@ -54,6 +58,11 @@ const DropdownMenu = ({ login, isAuth }) => {
   const goTo = (data) => {
     const win = window.open(data.url, '_blank')
     win.focus()
+  }
+
+  const logout = () => {
+    clearCookies()
+    history.push('/')
   }
 
   return (
@@ -85,6 +94,14 @@ const DropdownMenu = ({ login, isAuth }) => {
             >
               <div className="menu-item-title">{Strings.language[state.lang]}</div>
             </DropdownItem>
+            {isAuth && (
+              <DropdownItem
+                leftIcon="login"
+                onClick={logout}
+              >
+                <div className="menu-item-title">{Strings.logOut[state.lang]}</div>
+              </DropdownItem>
+            )}
           </div>
         </CSSTransition>
 
@@ -133,9 +150,9 @@ const Dropdown = ({ login, logo, isAuth }) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    open && document.addEventListener('click', handleOutsideClick, false)
+    open && window.addEventListener('click', handleOutsideClick)
     return () => {
-      document.removeEventListener('click', handleOutsideClick, false)
+      window.removeEventListener('click', handleOutsideClick)
     }
   }, [open])
 

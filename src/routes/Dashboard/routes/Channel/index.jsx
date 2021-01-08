@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { botUsername, apiEndPoint } from 'config';
 import { StoreContext } from 'store/Store';
@@ -53,14 +53,13 @@ const Channel = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
         const channel = await data.json()
 
         setChannel(channel[0].name)
-        if (!!channel[0].bot_active) setActive(true)
+        if (channel[0].bot_active) setActive(true)
         setInit(false)
       } catch(e) {
         console.error(e)
@@ -76,7 +75,6 @@ const Channel = () => {
         })
         if (data.status === 401) {
           clearCookies()
-          toast.error(Strings.youAreNotAuthorized[state.lang])
           history.push('/')
           return
         }
@@ -94,7 +92,7 @@ const Channel = () => {
     }
 
     if (init) {
-      fetchUser()
+      localStorage.getItem('admin') === null && fetchUser()
       fetchChannel()
       fetchModerators()
     }
@@ -156,13 +154,13 @@ const Channel = () => {
       <Card className="videos_inner">
         <div className="vid-main-wrapper">
           <div className="vid-container">
-            {!!channel ? <TwitchPlayer channel={channel} /> : <Loader />}
+            {channel ? <TwitchPlayer channel={channel} /> : <Loader />}
           </div>
 
           <div className="vid-list-container">
             <ul>
               <ol id="vid-list" style={{ 'lineHeight': 0 }}>
-                {!!channel && <TwitchChat channel={channel} />}
+                {channel && <TwitchChat channel={channel} />}
               </ol>
             </ul>
           </div>

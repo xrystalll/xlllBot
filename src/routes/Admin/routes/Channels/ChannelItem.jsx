@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import './style.css';

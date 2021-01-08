@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import { useForm } from 'hooks/useForm';

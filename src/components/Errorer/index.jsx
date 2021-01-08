@@ -1,5 +1,4 @@
-import React from 'react';
-import '././style.css';
+import './style.css';
 
 const Errorer = ({ message, size = 112, color = '#8e9399' }) => {
   return (

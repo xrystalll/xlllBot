@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { NavLink, Redirect, Switch, Route, useHistory, useRouteMatch } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
@@ -22,10 +22,10 @@ const Admin = () => {
 
   return (
     <Switch>
-      <Route path={path + '/channels'} component={Channels} />
-      <Route path={path + '/invites'} component={Invites} />
+      <Route path={path + '/channels'} exact component={Channels} />
+      <Route path={path + '/invites'} exact component={Invites} />
       <Route path={path} exact>
-        <Layout title={Strings.dashboard[state.lang]} subTitle={Strings.adminPanel[state.lang]}>
+        <Layout title={Strings.adminPanel[state.lang]} subTitle={Strings.dashboard[state.lang]}>
           <Card>
             <div className="admin__nav">
               <NavLink to={path + '/channels'} className="admin__nav_item">{Strings.allChannels[state.lang]}</NavLink>
@@ -35,7 +35,7 @@ const Admin = () => {
         </Layout>
       </Route>
       <Route>
-        <Redirect to={{ pathname: path }} />
+        <Redirect to={path} />
       </Route>
     </Switch>
   )

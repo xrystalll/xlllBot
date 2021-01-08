@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import '././style.css';
+import './style.css';
 
 const Layout = ({ title, subTitle, videoLayout, action, back, children }) => {
   const videoblock = videoLayout ? ' videoblock' : ''
@@ -10,8 +9,9 @@ const Layout = ({ title, subTitle, videoLayout, action, back, children }) => {
       <section id="main">
         <div className={'content--boxed-sm' + videoblock}>
           <header className="content__header">
-            <h2>{title}
-              {!!subTitle && !!back
+            <h2>
+              {title}
+              {subTitle && back
                 ? (
                   <small className="back">
                     <Link to={back}>
@@ -22,7 +22,7 @@ const Layout = ({ title, subTitle, videoLayout, action, back, children }) => {
                 ) : <small>{subTitle}</small>
               }
             </h2>
-            {!!action && action}
+            {action || null}
           </header>
           {children}
         </div>

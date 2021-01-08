@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
 import { getCookie } from 'support/Utils';
 import Dropdown from 'components/Dropdown';
 import CustomScrollbar from 'components/CustomScrollbar';
-import '././style.css';
+import './style.css';
 
 class Header extends Component {
   static contextType = StoreContext;
@@ -24,32 +24,28 @@ class Header extends Component {
 
   componentDidMount() {
     this._isMounted = true
-    document.addEventListener('click', this.handleOutsideClick.bind(this), false)
+    window.addEventListener('click', this.handleOutsideClick.bind(this))
   }
 
   componentWillUnmount() {
     this._isMounted = false
-    document.removeEventListener('click', this.handleOutsideClick.bind(this), false)
+    window.removeEventListener('click', this.handleOutsideClick.bind(this))
   }
 
   toggleMenu() {
     if (!this._isMounted) return
 
-    this.setState({
-      showMenu: !this.state.showMenu
-    })
+    this.setState({ showMenu: !this.state.showMenu })
   }
 
   closeMenu() {
     if (!this._isMounted) return
 
-    this.setState({
-      showMenu: false
-    })
+    this.setState({ showMenu: false })
   }
 
   handleOutsideClick(e) {
-    if (!e.target.closest('.open')) {
+    if (!e.target.closest('.open') || e.target.closest('.top-menu')) {
       this.closeMenu()
     }
   }
@@ -59,7 +55,7 @@ class Header extends Component {
     const menuVis = showMenu ? 'open' : ''
 
     return (
-      <React.Fragment>
+      <Fragment>
         <header id="header" className={menuVis}>
           <div className="logo">
             <i onClick={this.toggleMenu} className="logo__trigger material-icons">menu</i>
@@ -79,7 +75,7 @@ class Header extends Component {
                 </NavLink>
               </li>
               {this.isAuth && (
-                <React.Fragment>
+                <Fragment>
                   <li>
                     <NavLink to="/dashboard/channel" onClick={this.closeMenu}>
                       <i className="nav-ic">person</i>
@@ -124,7 +120,7 @@ class Header extends Component {
                       </NavLink>
                     </li>
                   )}
-                </React.Fragment>
+                </Fragment>
               )}
               <li>
                 <NavLink to="/commands" onClick={this.closeMenu}>
@@ -135,7 +131,7 @@ class Header extends Component {
             </ul>
           </CustomScrollbar>
         </nav>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }

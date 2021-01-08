@@ -1,10 +1,15 @@
-import React, {createContext, useReducer} from 'react';
+import { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
 
 const langs = ['ru', 'en']
 const langFromLS = langs.find(i => i === localStorage.getItem('lang'))
 const langFromNL = langs.find(i => i === window.navigator.language)
 const lang = langFromLS ? langFromLS : langFromNL ? langFromNL : 'en'
+
+const adminState = ['true', 'false']
+const adminFromLS = adminState.find(i => i === localStorage.getItem('admin'))
+const admin = adminFromLS ? !!JSON.parse(adminFromLS || false) : false
+
 const initialState = {
   response: [],
   playIndex: 0,
@@ -13,7 +18,7 @@ const initialState = {
   noData: false,
   mini: false,
   lang,
-  admin: !!JSON.parse(localStorage.getItem('admin') || false) || false
+  admin
 }
 
 const StoreContext = createContext(initialState)

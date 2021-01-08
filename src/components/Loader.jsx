@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Loader = ({ size = '24', color = '#fff' }) => {
   return (
     <div className="content_loader">

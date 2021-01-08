@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'hooks/useForm';
 import { toast } from 'react-toastify';
 import './style.css';

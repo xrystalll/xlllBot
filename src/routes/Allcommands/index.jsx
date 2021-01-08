@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { apiEndPoint } from 'config';
 import { StoreContext } from 'store/Store';
 import Strings from 'support/Strings';
